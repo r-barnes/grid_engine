@@ -4,9 +4,14 @@ class grid_engine {
 	private:
 		std::vector< std::vector<T> > data;
 	public:
-		T& operator()(int x, int y)
+		typedef T		value_type;
+		typedef T		*pointer;
+		typedef const T	*const_pointer;
+		typedef T		&reference;
+		typedef const T	&const_reference;		
+		reference operator()(int x, int y)
 			{return data[y][x];}
-		const T& operator()(int x, int y) const
+		const_reference operator()(int x, int y) const
 			{return data[y][x];}
 		void resize(int Gwidth, int Gheight, bool preserve=false);
 		int width() const
@@ -15,6 +20,7 @@ class grid_engine {
 			{return data.size();}
 		grid_engine();
 		grid_engine(int width, int height);
+		void clear() { data.clear(); }
 };
 
 template <class T>

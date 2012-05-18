@@ -3,9 +3,9 @@ template <class T> class grid_engine_iterator;
 
 template <class T>
 class grid_engine {
-	friend class grid_engine_iterator<T>;
+	typedef std::vector< std::vector<T> > arr2d;
 	private:
-		std::vector< std::vector<T> > data;
+		arr2d data;
 	public:
 		typedef T		value_type;
 		typedef T		*pointer;
@@ -13,7 +13,29 @@ class grid_engine {
 		typedef T		&reference;
 		typedef const T	&const_reference;
 		typedef int		size_type;
-		typedef grid_engine_iterator<T> iterator;
+
+		class iterator : public std::iterator < std::bidirectional_iterator_tag, T, std::ptrdiff_t > {
+			private:
+				arr2d &my_ge;
+				int x,y;
+			public:
+				iterator ( arr2d &ge, int x0, int y0) : my_ge(ge), x(x0), y(y0) {}
+
+				bool operator==(const iterator &other){
+					return (my_ge==other.my_ge && x==other.x && y==other.y);
+				}
+				bool operator!=(const iterator &other){
+					return !(operator==(other));
+				}
+				iterator& operator++(int what){
+					x++;
+					if(x==my_ge.width()){
+						x=0;
+						y++;
+					}
+				}
+		};
+
 		reference operator()(int x, int y)
 			{return data[y][x];}
 		const_reference operator()(int x, int y) const
@@ -35,8 +57,8 @@ class grid_engine {
 			{return data[0][0];}
 		const_reference back() const
 			{return data[height()-1][width()-1];}
-		iterator begin() { return iterator(*this, 0, 0); }
-		iterator end() { return iterator(*this, width()-1, height()-1); }
+		iterator begin() { return iterator(data, 0, 0); }
+		iterator end() { return iterator(data, 0, height()-1); }
 };
 
 template <class T>
@@ -53,25 +75,6 @@ void grid_engine<T>::resize(int Gwidth, int Gheight, bool preserve){
 	for(int i=0;i<Gheight;i++)
 		data[i].resize(Gwidth);
 }
-
-template <class T>
-class grid_engine_iterator{
-	private:
-		grid_engine<T>	&my_ge;
-		int x,y;
-	public:
-		grid_engine_iterator( grid_engine<T> &ge, int x0, int y0 ){
-			my_ge=ge;
-			x=x0;
-			y=y0;
-		}
-		bool operator==(grid_engine<T>::iterator &other){
-			return (other.my_ge==my_ge && other.x==x && other.y==y);
-		}
-		bool operator!=(grid_engine<T>::iterator &other){
-			return !(operator==(other));
-		}
-};
 
 
 

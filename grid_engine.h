@@ -9,6 +9,10 @@ class grid_engine {
 		const T& operator()(int x, int y) const
 			{return data[y][x];}
 		void resize(int Gwidth, int Gheight, bool preserve=false);
+		int width() const
+			{return data[0].size();}
+		int height() const
+			{return data.size();}
 		grid_engine();
 		grid_engine(int width, int height);
 };

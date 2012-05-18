@@ -1,14 +1,32 @@
-#include <boost/numeric/ublas/matrix.hpp>
+#include <vector>
 template <class T>
-class grid_engine : public boost::numeric::ublas::matrix<T>{
+class grid_engine {
+	private:
+		std::vector< std::vector<T> > data;
 	public:
 		T& operator()(int x, int y)
-			{return boost::numeric::ublas::matrix<T>::operator()(x,y);}
+			{return data[y][x];}
 		const T& operator()(int x, int y) const
-			{return boost::numeric::ublas::matrix<T>::operator()(x,y);}
-		void resize(int width, int height, bool preserve=false)
-			{boost::numeric::ublas::matrix<T>::resize(width,height,preserve);}
+			{return data[y][x];}
+		void resize(int Gwidth, int Gheight, bool preserve=false);
+		grid_engine();
+		grid_engine(int width, int height);
 };
+
+template <class T>
+grid_engine<T>::grid_engine() {}
+
+template <class T>
+grid_engine<T>::grid_engine(int Gwidth, int Gheight){
+	resize(Gwidth,Gheight);
+}
+
+template <class T>
+void grid_engine<T>::resize(int Gwidth, int Gheight, bool preserve){
+	data.resize(Gheight);
+	for(int i=0;i<Gheight;i++)
+		data[i].resize(Gwidth);
+}
 
 
 template <class T>

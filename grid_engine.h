@@ -1,5 +1,5 @@
 #include <vector>
-template <class T> class grid_engine_iterator;
+#include <iostream>
 
 template <class T>
 class grid_engine {
@@ -14,25 +14,34 @@ class grid_engine {
 		typedef const T	&const_reference;
 		typedef int		size_type;
 
-		class iterator : public std::iterator < std::bidirectional_iterator_tag, T, std::ptrdiff_t > {
+		class iterator : public std::iterator < std::forward_iterator_tag, T, std::ptrdiff_t > {
 			private:
-				arr2d &my_ge;
+				grid_engine<T> &my_ge;
 				int x,y;
 			public:
-				iterator ( arr2d &ge, int x0, int y0) : my_ge(ge), x(x0), y(y0) {}
+				iterator ( grid_engine<T> &ge, int x0, int y0) : my_ge(ge), x(x0), y(y0) {}
 
 				bool operator==(const iterator &other){
-					return (my_ge==other.my_ge && x==other.x && y==other.y);
+					return (x==other.x && y==other.y); //TODO: my_ge==other.my_ge ???
 				}
 				bool operator!=(const iterator &other){
 					return !(operator==(other));
 				}
-				iterator& operator++(int what){
-					x++;
+				iterator& operator++(){
+					++x;
 					if(x==my_ge.width()){
 						x=0;
-						y++;
+						++y;
 					}
+					return *this;
+				}
+				iterator operator++(int){
+					iterator tmp=*this;
+					++*this;
+					return tmp;
+				}
+				reference operator*(){
+					return my_ge(x,y);
 				}
 		};
 
@@ -40,13 +49,23 @@ class grid_engine {
 			{return data[y][x];}
 		const_reference operator()(int x, int y) const
 			{return data[y][x];}
-		void resize(int Gwidth, int Gheight, bool preserve=false);
+
+		void resize(int Gwidth, int Gheight){
+			data.resize(Gheight, std::vector<T> (Gwidth));
+		}
+
+		void resize(int Gwidth, int Gheight, reference default_item){
+			data.resize(Gheight, std::vector<T> (Gwidth, default_item));
+		}
+
 		size_type width() const
 			{return data[0].size();}
 		size_type height() const
 			{return data.size();}
-		grid_engine();
-		grid_engine(int width, int height);
+		grid_engine() {};
+		grid_engine(int Gwidth, int Gheight){
+			resize(Gwidth,Gheight);
+		}
 		void clear()
 			{data.clear();}
 		reference front()
@@ -57,24 +76,10 @@ class grid_engine {
 			{return data[0][0];}
 		const_reference back() const
 			{return data[height()-1][width()-1];}
-		iterator begin() { return iterator(data, 0, 0); }
-		iterator end() { return iterator(data, 0, height()-1); }
+		iterator begin() { return iterator(*this, 0, 0); }
+		iterator end() { return iterator(*this, 0, height()-1); }
 };
 
-template <class T>
-grid_engine<T>::grid_engine() {}
-
-template <class T>
-grid_engine<T>::grid_engine(int Gwidth, int Gheight){
-	resize(Gwidth,Gheight);
-}
-
-template <class T>
-void grid_engine<T>::resize(int Gwidth, int Gheight, bool preserve){
-	data.resize(Gheight);
-	for(int i=0;i<Gheight;i++)
-		data[i].resize(Gwidth);
-}
 
 
 
@@ -82,4 +87,123 @@ template <class T>
 class hex_engine : public grid_engine<T> {
 	public:
 		
+};
+
+
+
+
+template <class T>
+class conn8_engine : public grid_engine<T>{
+	typedef typename grid_engine<T>::reference reference;
+	public:
+		conn8_engine (int width, int height) : grid_engine<T>(width,height) {}
+		class neighbours {
+			private:
+				conn8_engine<T> &my_ge;
+				int x,y;
+				int within;
+				int dx,dy;
+				int current_ring;
+			public:
+				neighbours ( conn8_engine<T> &ge, int x0, int y0, int within0, int dx0, int dy0, int current_ring0) : my_ge(ge), x(x0), y(y0), within(within0), dx(dx0), dy(dy0), current_ring(current_ring0) {}
+
+				bool operator==(const neighbours &other){
+					return (x==other.x && y==other.y && within==other.within && dx==other.dx && dy==other.dy && current_ring==other.current_ring); //TODO: my_ge==other.my_ge ???
+				}
+				bool operator!=(const neighbours &other){
+					return !(operator==(other));
+				}
+				neighbours& operator++(){	//TODO: Need to check for IN_GRID!
+					++dx;
+					if(dx==0 && dy==0)
+						++dx;
+					if(dx>current_ring){
+						dx=-current_ring;
+						++dy;
+						if(dy>current_ring){
+							++current_ring;
+							dx=-current_ring;
+							dy=-current_ring;
+							if(current_ring>within){
+								dx=dy=-1;
+								current_ring=0;
+							}
+						}
+					}
+					return *this;
+				}
+				neighbours operator++(int){
+					neighbours tmp=*this;
+					++*this;
+					return tmp;
+				}
+				reference operator*(){
+					std::cerr<<"Dereferencing"<<x<<" "<<y<<std::endl;
+					return my_ge(x+dx,y+dy);
+				}
+		};
+
+		neighbours nbegin(int x, int y, int within){
+			if(within<1)
+				throw "Neighbours must be >=-1";
+			else
+				return neighbours(*this, x, y, within, -1, -1, 1);
+		}
+
+		neighbours nend(int x, int y, int within){
+			return neighbours(*this, x, y, within, -1, -1, 0);
+		}
+
+
+
+
+
+
+
+
+
+		class ring {
+			private:
+				conn8_engine<T> &my_ge;
+				int x,y;
+				int ring;
+				int dx,dy;
+			public:
+				ring ( conn8_engine<T> &ge, int x0, int y0, int ring0, int dx0, int dy0) : my_ge(ge), x(x0), y(y0), ring(ring0), dx(dx0), dy(dy0) {}
+
+				bool operator==(const neighbours &other){
+					return (x==other.x && y==other.y && ring==other.ring && dx==other.dx && dy==other.dy); //TODO: my_ge==other.my_ge ???
+				}
+				bool operator!=(const neighbours &other){
+					return !(operator==(other));
+				}
+				ring& operator++(){ //TODO
+					if(dy==-ring){
+						++dx;
+						if(dy>ring){
+							
+
+					return *this;
+				}
+				neighbours operator++(int){
+					neighbours tmp=*this;
+					++*this;
+					return tmp;
+				}
+				reference operator*(){
+					std::cerr<<"Dereferencing"<<x<<" "<<y<<std::endl;
+					return my_ge(x+dx,y+dy);
+				}
+		};
+
+		ring rbegin(int x, int y, int ring){
+			if(within<1)
+				throw "Neighbours must be >=-1";
+			else
+				return ring(*this, x, y, ring, -ring, -ring);
+		}
+
+		ring rend(int x, int y, int ring){
+			return ring(*this, x, y, -1, ring, ring);
+		}
 };

@@ -3,8 +3,14 @@
 using namespace std;
 
 int main(){
-	conn8_engine<int> hi(10,10);
+	conn8_engine<int> hi(3,3);
 
+  
+
+  for(grid_engine<int>::niterator n=hi.niterator(1,1,1,1);n!=hi.end();n++)
+    cout<<*n<<endl;
+
+/*
 	hi(0,0)=3;
 	hi(2,3)=7;
 
@@ -16,4 +22,5 @@ int main(){
 			cout<<hi(x,y);
 		cout<<endl;
 	}
+*/
 }

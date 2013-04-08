@@ -34,13 +34,6 @@ int main(int argc, char **argv){
     }
   }
 
-  for(int i=0,r=0;i<xs.size();++i){
-    if(i==begins[r])
-      cout<<endl<<"R"<<r++<<":";
-    cout<<" ("<<xs[i]<<","<<ys[i]<<")";
-  }
-  cout<<endl<<endl;
-
   cout<<"Begins:"<<endl;
   for(int i=0;i<begins.size();++i)
     cout<<begins[i]<<", ";

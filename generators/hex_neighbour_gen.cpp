@@ -1,21 +1,13 @@
-/*
-X-Coordinates
-./a.out  | sed 's/^N [0-9]*://' | sed 's/,[^)]*\)/,/g' | sed 's/\(//g'
-Y-Coordinates
-./a.out  | sed 's/^N [0-9]*://' | sed 's/\([^,]*,//g' | sed 's/\)/,/g'
-
-Each ring adds 6 neighbours, so the neighbours for a particular ring are at:
-*/
+//Each ring adds 6 neighbours
 
 #include <iostream>
 #include <queue>
 #include <string>
 #include <cstdlib>
 #include <set>
+using namespace std;
 
 #define NF(y,column) (((column%2)==0)?(y):-(y))
-
-using namespace std;
 
 //Even columns. Multiply y-coordinate by -1 to make this odd columns
 int dx_hex[6]={ 0, -1, 1, 0, -1,  1};

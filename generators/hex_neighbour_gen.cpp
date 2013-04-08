@@ -47,7 +47,7 @@ int main(int argc, char **argv){
 
 		if(c.x==-1){
       ring++;
-      if(ring>maxrings)
+      if(ring>=maxrings)
         break;
       begins.push_back(xs.size());
 			hex_edge.push(grid_cell(-1,-1));

@@ -14,7 +14,7 @@ int main(int argc, char **argv){
   xs.push_back(0);
   ys.push_back(0);
   begins.push_back(0);
-  for(int r=1;r<=rings;++r){
+  for(int r=1;r<rings;++r){
     begins.push_back(xs.size());
     for(int dx=-r;dx<=r;++dx){
       xs.push_back(dx);

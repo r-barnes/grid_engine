@@ -1,20 +1,11 @@
 CC=g++
-CFLAGS=-Wall -fopenmp
-PRE_FLAGS=-O3
-ODIR=obj
-DEPS = grid_engine.h
+CFLAGS=-Wall -fopenmp -O3
 
-_OBJ = main.o
-OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
-
-$(ODIR)/%.o: %.cpp $(DEPS)
-	$(CC) $(PRE_FLAGS) -c -o $@ $< $(CFLAGS)
-
-grid_test: $(OBJ)
-	$(CC) $(PRE_FLAGS) -o grid_test.exe $^ $(CFLAGS)
-	du -hs ./grid_test.exe
-
-debug: 
+all:
+	$(MAKE) --directory=generators/
+	./generators/d8_neighbour_gen.exe  100 >  neighbours.h
+	./generators/hex_neighbour_gen.exe 100 >> neighbours.h
+	$(CC) $(CFLAGS) main.cpp -o main.exe
 
 clean:
-	rm -f $(ODIR)/*.o *~ core
+	rm -rf *.exe

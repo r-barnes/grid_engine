@@ -7,67 +7,83 @@ Y-Coordinates
 Each ring adds 6 neighbours, so the neighbours for a particular ring are at:
 */
 
-#include <cstdio>
+#include <iostream>
 #include <queue>
 #include <string>
 #include <cstdlib>
+#include <set>
 
-#define MAX_DIM  100
-#define OX MAX_DIM/2
-#define OY MAX_DIM/2
-#define IN_GRID(x,y) (x>=0 && y>=0 && x<MAX_DIM && y<MAX_DIM)
 #define NF(y,column) (((column%2)==0)?(y):-(y))
 
 using namespace std;
 
 //Even columns. Multiply y-coordinate by -1 to make this odd columns
-int dx_hex[6]={0,-1,1,0,-1,1};
-int dy_hex[6]={-1,0,0,1,-1,-1};
+int dx_hex[6]={ 0, -1, 1, 0, -1,  1};
+int dy_hex[6]={-1,  0, 0, 1, -1, -1};
 
-typedef struct grid_cell_type {
-	int x;
-	int y;
-	grid_cell_type(int x0, int y0):x(x0),y(y0){}
-	grid_cell_type(){}
-} grid_cell;
+class grid_cell{
+  public:
+    int x,y;
+    grid_cell(int x, int y) : x(x), y(y) {}
+    grid_cell(){}
+    bool operator< (const grid_cell& a) const { return y<a.y || x<a.x; }
+};
 
-int main(){
-	int stat[MAX_DIM][MAX_DIM];
-	int ncount;
-	setbuf(stderr,NULL);
+int main(int argc, char **argv){
+  if(argc!=2){
+    cout<<argv[0]<<" <NUMBER OF RINGS>"<<endl;
+    return -1;
+  }
+
+  int maxrings=atoi(argv[1]);
+
 	queue<grid_cell> hex_edge;
-
-	//Reset stat
-	for(int x=0;x<MAX_DIM;x++)
-	for(int y=0;y<MAX_DIM;y++)
-		stat[x][y]=0;
+  vector<int> begins, xs, ys;
+  set<grid_cell> used;
+  int ring=0;
 
 	hex_edge.push(grid_cell(-1,-1));
-	hex_edge.push(grid_cell(OX,OY));
-	stat[OX][OY]=ncount=1;
+	hex_edge.push(grid_cell(0,0));
+
+  begins.push_back(0);
+  xs.push_back(0);
+  ys.push_back(0);
 
 	while(true){
 		grid_cell c=hex_edge.front();
 		hex_edge.pop();
 
 		if(c.x==-1){
-			ncount++;
-			if(ncount==OX)
-				return 0;
+      ring++;
+      if(ring>maxrings)
+        break;
+      begins.push_back(xs.size());
 			hex_edge.push(grid_cell(-1,-1));
-			printf("\nN %d:",ncount-1);
 			continue;
 		}
 
 		for(int n=0;n<6;n++){	//Look through neighbours
-			if(!IN_GRID(c.x+dx_hex[n],c.y+NF(dy_hex[n],c.x))){
-				printf(" OUT OF BOUNDS!\n");
-				return 0;
-			} else if (stat[c.x+dx_hex[n]][c.y+NF(dy_hex[n],c.x)]==0) {
-				printf(" (%d,%d)",(c.x+dx_hex[n])-OX,(c.y+NF(dy_hex[n],c.x))-OY);
-				stat[c.x+dx_hex[n]][c.y+NF(dy_hex[n],c.x)]=ncount;
+			if (!used.count(grid_cell(c.x+dx_hex[n],c.y+NF(dy_hex[n],c.x)))) {
+        used.insert(grid_cell(c.x+dx_hex[n],c.y+NF(dy_hex[n],c.x)));
+        xs.push_back(c.x+dx_hex[n]);
+        ys.push_back(c.y+NF(dy_hex[n],c.x));
 				hex_edge.push(grid_cell(c.x+dx_hex[n],c.y+NF(dy_hex[n],c.x)));
 			}
 		}
 	}
+
+  cout<<"Begins:"<<endl;
+  for(int i=0;i<begins.size();++i)
+    cout<<begins[i]<<", ";
+  cout<<endl<<endl;
+
+  cout<<"X-offsets:"<<endl;
+  for(int i=0;i<xs.size();++i)
+    cout<<xs[i]<<", ";
+  cout<<endl<<endl;
+
+  cout<<"Y-offsets:"<<endl;
+  for(int i=0;i<ys.size();++i)
+    cout<<ys[i]<<", ";
+  cout<<endl<<endl;
 }

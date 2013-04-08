@@ -34,18 +34,18 @@ int main(int argc, char **argv){
     }
   }
 
-  cout<<"Begins:"<<endl;
-  for(int i=0;i<begins.size();++i)
-    cout<<begins[i]<<", ";
-  cout<<endl<<endl;
+  cout<<"d8_begins[]={"<<begins[0];
+  for(int i=1;i<begins.size();++i)
+    cout<<", "<<begins[i];
+  cout<<"};"<<endl<<endl;
 
-  cout<<"X-offsets:"<<endl;
-  for(int i=0;i<xs.size();++i)
-    cout<<xs[i]<<", ";
-  cout<<endl<<endl;
+  cout<<"d8_dx[]={"<<xs[0];
+  for(int i=1;i<xs.size();++i)
+    cout<<", "<<xs[i];
+  cout<<"};"<<endl<<endl;
 
-  cout<<"Y-offsets:"<<endl;
-  for(int i=0;i<ys.size();++i)
-    cout<<ys[i]<<", ";
-  cout<<endl<<endl;
+  cout<<"d8_dy[]={"<<ys[0];
+  for(int i=1;i<ys.size();++i)
+    cout<<", "<<ys[i];
+  cout<<"};"<<endl<<endl;
 }

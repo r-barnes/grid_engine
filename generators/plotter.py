@@ -7,7 +7,7 @@ def frame(root, side):
   w.pack(side=side, expand=YES, fill=BOTH)
   return w
 
-class HexDemo(Frame):
+class GridDrawer(Frame):
   def __init__(self):
     Frame.__init__(self)
     self.pack(expand=YES, fill=BOTH)
@@ -52,7 +52,7 @@ def main():
     print "%s <hex/d4/d8> <coordinates file>" % (sys.argv[0])
     sys.exit(-1)
 
-  h=HexDemo()
+  h=GridDrawer()
   for x in range(-30,10):
     for y in range(-30,10):
       h.DrawHex(x,y,"white")

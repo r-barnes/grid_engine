@@ -53,13 +53,13 @@ namespace grid_engine {
           int i, x0, y0, outer_ring, current_ring;
 
           void advance_until_valid(){
-            while(!my_ge.in_grid(x0+N.dx[i],y0+N.dy[i])){
+            do {
               ++i;
               if(i==N.nlen || i==N.begins[outer_ring+1]){
                 i=-1;
                 return;
               }
-            }
+            } while(!my_ge.in_grid(x0+N.dx[i],y0+N.dy[i]));
           }
 		    public:
 			    nparser ( grid_engine<T> &ge, neighbours N, int x, int y, int inner_ring, int outer_ring) : my_ge(ge), N(N), x0(x), y0(y), outer_ring(outer_ring), current_ring(inner_ring) {

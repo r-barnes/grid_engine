@@ -119,7 +119,7 @@ namespace grid_engine{
             assert(outer_ring>0);
             assert(outer_ring>=current_ring);
 
-            i=begins[inner_ring];
+            i=N->begins(inner_ring);
             if(!valid())
               advance_until_valid();
           }
@@ -170,10 +170,23 @@ namespace grid_engine{
 					  ++*this;
 					  return tmp;
 				  }
-          grid_engine<T>::nparser hexring(int inner_ring, int outer_ring) const {
+
+          grid_engine<T>::nparser hexring(int inner_ring, int outer_ring=-1) const {
+            if(outer_ring==-1) outer_ring=inner_ring;
             typename grid_engine<T>::nparser temp(my_ge, new hex(), x0, y0, inner_ring, outer_ring);
             return temp;
           }
+          grid_engine<T>::nparser d8ring(int inner_ring, int outer_ring=-1) const {
+            if(outer_ring==-1) outer_ring=inner_ring;
+            typename grid_engine<T>::nparser temp(my_ge, new d8(), x0, y0, inner_ring, outer_ring);
+            return temp;
+          }
+          grid_engine<T>::nparser d4ring(int inner_ring, int outer_ring=-1) const {
+            if(outer_ring==-1) outer_ring=inner_ring;
+            typename grid_engine<T>::nparser temp(my_ge, new d4(), x0, y0, inner_ring, outer_ring);
+            return temp;
+          }
+
           value_type operator*() const {
             return my_ge(x0,y0);
           }

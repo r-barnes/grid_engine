@@ -52,6 +52,10 @@ class d4 : public neighbours {
 
 namespace grid_engine{
 
+  d8 nd8;
+  d4 nd4;
+  hex nhex;
+
   template <class T>
   class grid_engine {
 	  typedef std::vector< std::vector<T> > arr2d;
@@ -173,17 +177,17 @@ namespace grid_engine{
 
           grid_engine<T>::nparser hexring(int inner_ring, int outer_ring=-1) const {
             if(outer_ring==-1) outer_ring=inner_ring;
-            typename grid_engine<T>::nparser temp(my_ge, new hex(), x0, y0, inner_ring, outer_ring);
+            typename grid_engine<T>::nparser temp(my_ge, &nhex, x0, y0, inner_ring, outer_ring);
             return temp;
           }
           grid_engine<T>::nparser d8ring(int inner_ring, int outer_ring=-1) const {
             if(outer_ring==-1) outer_ring=inner_ring;
-            typename grid_engine<T>::nparser temp(my_ge, new d8(), x0, y0, inner_ring, outer_ring);
+            typename grid_engine<T>::nparser temp(my_ge, &nd8, x0, y0, inner_ring, outer_ring);
             return temp;
           }
           grid_engine<T>::nparser d4ring(int inner_ring, int outer_ring=-1) const {
             if(outer_ring==-1) outer_ring=inner_ring;
-            typename grid_engine<T>::nparser temp(my_ge, new d4(), x0, y0, inner_ring, outer_ring);
+            typename grid_engine<T>::nparser temp(my_ge, &nd4, x0, y0, inner_ring, outer_ring);
             return temp;
           }
 
@@ -200,32 +204,4 @@ namespace grid_engine{
 
 		  parser begin() {return parser(*this, 0, 0);}
   };
-
-  template <class T>
-  class hexgrid : public grid_engine<T> {
-    public:
-      hexgrid(int width, int height) : grid_engine<T>(width,height) {}
-      typename grid_engine<T>::nparser ring(int inner_ring, int outer_ring) const {
-        return grid_engine<T>::hexring(inner_ring, outer_ring);
-      }
-  };
-
-  template <class T>
-  class d8grid : public grid_engine<T> {
-    public:
-      d8grid(int width, int height) : grid_engine<T>(width,height) {}
-      typename grid_engine<T>::nparser ring(int inner_ring, int outer_ring) const {
-        return grid_engine<T>::d8ring(inner_ring, outer_ring);
-      }
-  };
-
-  template <class T>
-  class d4grid : public grid_engine<T> {
-    public:
-      d4grid(int width, int height) : grid_engine<T>(width,height) {}
-      typename grid_engine<T>::nparser ring(int inner_ring, int outer_ring) const {
-        return grid_engine<T>::d4ring(inner_ring, outer_ring);
-      }
-  };
-
 }

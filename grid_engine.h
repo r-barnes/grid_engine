@@ -200,12 +200,32 @@ namespace grid_engine{
 
 		  parser begin() {return parser(*this, 0, 0);}
   };
-/*
+
   template <class T>
-  class d8grid : grid_engine<T> {
-    typename grid_engine<T>::nparser ring(int inner_ring, int outer_ring) const {
-      return grid_engine<T>::hexring(inner_ring, outer_ring);
-    }
+  class hexgrid : public grid_engine<T> {
+    public:
+      hexgrid(int width, int height) : grid_engine<T>(width,height) {}
+      typename grid_engine<T>::nparser ring(int inner_ring, int outer_ring) const {
+        return grid_engine<T>::hexring(inner_ring, outer_ring);
+      }
   };
-*/
+
+  template <class T>
+  class d8grid : public grid_engine<T> {
+    public:
+      d8grid(int width, int height) : grid_engine<T>(width,height) {}
+      typename grid_engine<T>::nparser ring(int inner_ring, int outer_ring) const {
+        return grid_engine<T>::d8ring(inner_ring, outer_ring);
+      }
+  };
+
+  template <class T>
+  class d4grid : public grid_engine<T> {
+    public:
+      d4grid(int width, int height) : grid_engine<T>(width,height) {}
+      typename grid_engine<T>::nparser ring(int inner_ring, int outer_ring) const {
+        return grid_engine<T>::d4ring(inner_ring, outer_ring);
+      }
+  };
+
 }

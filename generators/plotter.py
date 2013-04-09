@@ -16,7 +16,7 @@ class HexDemo(Frame):
     canvas = Canvas()
     canvas.pack(expand=YES, fill=BOTH)
     self.canvas = canvas
-    self.size=10
+    self.size=20
 
     for x in range(-10,10):
       for y in range(-10,10):
@@ -39,8 +39,8 @@ class HexDemo(Frame):
   def DrawHex(self, orgx, orgy, filler):
     oneseg = self.size/4
     twoseg = oneseg*2  # same as size/2
-    orgx*=self.size
-    orgy*=self.size
+    orgy=orgy*self.size+(orgx%2)*self.size/2
+    orgx=orgx*self.size*3/4.
 
     # Create a new one
     self.hex = self.canvas.create_polygon( 

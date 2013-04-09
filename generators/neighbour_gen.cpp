@@ -59,7 +59,7 @@ int main(int argc, char **argv){
 
 	edge.push(grid_cell(999999,999999));
 	edge.push(grid_cell(0,0));
-  used.push(grid_cell(0,0));
+  used.insert(grid_cell(0,0));
 
   begins.push_back(0);
   xs.push_back(0);
@@ -99,17 +99,21 @@ int main(int argc, char **argv){
 		}
 	}
 
-  cout<<argv[1]<<"_begins[]={"<<begins[0];
+  cout<<"class "<<argv[1]<<" : public neighbours {"<<endl;
+  cout<<"public:\nstatic int begins[],dx[],dy[],rmax;};"<<endl<<endl;
+
+  cout<<"int "<<argv[1]<<"::rmax="<<begins.size()-1<<";"<<endl;
+  cout<<"int "<<argv[1]<<"::begins[]={"<<begins[0];
   for(int i=1;i<begins.size();++i)
     cout<<", "<<begins[i];
   cout<<"};"<<endl<<endl;
 
-  cout<<argv[1]<<"_dx[]={"<<xs[0];
+  cout<<"int "<<argv[1]<<"::dx[]={"<<xs[0];
   for(int i=1;i<xs.size();++i)
     cout<<", "<<xs[i];
   cout<<"};"<<endl<<endl;
 
-  cout<<argv[1]<<"_dy[]={"<<ys[0];
+  cout<<"int "<<argv[1]<<"::dy[]={"<<ys[0];
   for(int i=1;i<ys.size();++i)
     cout<<", "<<ys[i];
   cout<<"};"<<endl<<endl;

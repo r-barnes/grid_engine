@@ -4,11 +4,15 @@ using namespace std;
 
 int main(){
   typedef grid_engine::grid_engine<int> hex;
-  hex hi(3,3);
+  hex hi(10,10);
 
-  for(hex::parser i=hi.begin();i.good();i++)
-    for(hex::nparser n=i.hexring(1,4);n.good();n++)
-      cout<<*n<<endl;  
+  for(hex::parser i=hi.begin();i.good();++i){
+    cout<<"("<<i.x()<<","<<i.y()<<"):";
+    for(hex::nparser n=i.hexring(1,3);n.good();++n)
+      cout<<"";
+//      cout<<" "<<*n;
+    cout<<endl;
+  }
 
 //  for(grid_engine::grid_engine<int>::niterator n=hi.niterator(1,1,1,1);n!=hi.end();n++)
 //    cout<<*n<<endl;

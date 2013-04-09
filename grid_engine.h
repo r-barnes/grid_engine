@@ -2,9 +2,55 @@
 #include <iostream>
 #include <cassert>
 
+namespace grid_engine {
+
+class neighbours {
+  public:
+    virtual int dx(int i)     const { return -1; }
+    virtual int dy(int i)     const { return -1; }
+    virtual int begins(int i) const { return -1; }
+    virtual int nlen()        const { return -1; }
+    virtual int rlen()        const { return -1; }
+};
+
+class hex : public neighbours {
+  private:
+    static int begins0[],dx0[],dy0[],rlen0,nlen0;
+  public:
+    int begins(int i) const { return begins0[i]; }
+    int dx    (int i) const { return dx0[i];     }
+    int dy    (int i) const { return dy0[i];     }
+    int rlen  ()      const { return rlen0;      }
+    int nlen  ()      const { return nlen0;      }
+};
+
+class d8 : public neighbours {
+  private:
+    static int begins0[],dx0[],dy0[],rlen0,nlen0;
+  public:
+    int begins(int i) const { return begins0[i]; }
+    int dx    (int i) const { return dx0[i];     }
+    int dy    (int i) const { return dy0[i];     }
+    int rlen  ()      const { return rlen0;      }
+    int nlen  ()      const { return nlen0;      }
+};
+
+class d4 : public neighbours {
+  private:
+    static int begins0[],dx0[],dy0[],rlen0,nlen0;
+  public:
+    int begins(int i) const { return begins0[i]; }
+    int dx    (int i) const { return dx0[i];     }
+    int dy    (int i) const { return dy0[i];     }
+    int rlen  ()      const { return rlen0;      }
+    int nlen  ()      const { return nlen0;      }
+};
+
+}
+
 #include "neighbours.h"
 
-namespace grid_engine {
+namespace grid_engine{
 
   template <class T>
   class grid_engine {
@@ -49,25 +95,25 @@ namespace grid_engine {
 	    class nparser {
 		    private:
 			    grid_engine<T> &my_ge;
-          neighbours N;
+          neighbours *N;
           int i, x0, y0, outer_ring, current_ring;
 
           bool valid(){
-            return my_ge.in_grid(x0+N.dx[i],y0+N.dy[i]);
+            return my_ge.in_grid(x0+N->dx(i),y0+N->dy(i));
           }
 
           void advance_until_valid(){
             assert(i!=-1);
             do {
               ++i;
-              if(i==N.nlen || i==N.begins[outer_ring+1]){
+              if(i==N->nlen() || i==N->begins(outer_ring+1)){
                 i=-1;
                 return;
               }
             } while(!valid());
           }
 		    public:
-			    nparser ( grid_engine<T> &ge, neighbours N, int x0, int y0, int inner_ring, int outer_ring) : my_ge(ge), N(N), x0(x0), y0(y0), outer_ring(outer_ring), current_ring(inner_ring) {
+			    nparser ( grid_engine<T> &ge, neighbours *N, int x0, int y0, int inner_ring, int outer_ring) : my_ge(ge), N(N), x0(x0), y0(y0), outer_ring(outer_ring), current_ring(inner_ring) {
             assert(ge.in_grid(x0,y0));
             assert(current_ring>0);
             assert(outer_ring>0);
@@ -87,16 +133,16 @@ namespace grid_engine {
 				    return tmp;
 			    }
 			    value_type operator*() const {
-				    return my_ge(x0+N.dx[i],y0+N.dy[i]);
+				    return my_ge(x0+N->dx(i),y0+N->dy(i));
 			    }
           bool good() const {
             return i!=-1;
           }
           int x() const {
-            return x0+N.dx[i];
+            return x0+N->dx(i);
           }
           int y() const {
-            return y0+N.dy[i];
+            return y0+N->dy(i);
           }
 	    };
 
@@ -125,7 +171,7 @@ namespace grid_engine {
 					  return tmp;
 				  }
           grid_engine<T>::nparser hexring(int inner_ring, int outer_ring) const {
-            typename grid_engine<T>::nparser temp(my_ge, hex(), x0, y0, inner_ring, outer_ring);
+            typename grid_engine<T>::nparser temp(my_ge, new hex(), x0, y0, inner_ring, outer_ring);
             return temp;
           }
           value_type operator*() const {

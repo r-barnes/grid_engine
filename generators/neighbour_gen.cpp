@@ -99,21 +99,19 @@ int main(int argc, char **argv){
 		}
 	}
 
-  cout<<"class "<<argv[1]<<" : public neighbours { public: static int begins[],dx[],dy[],rlen,nlen;};"<<endl<<endl;
-
-  cout<<"int "<<argv[1]<<"::rlen="<<begins.size()<<";"<<endl;
-  cout<<"int "<<argv[1]<<"::nlen="<<xs.size()<<";"<<endl;
-  cout<<"int "<<argv[1]<<"::begins[]={"<<begins[0];
+  cout<<"int "<<argv[1]<<"::rlen0="<<begins.size()<<";"<<endl;
+  cout<<"int "<<argv[1]<<"::nlen0="<<xs.size()<<";"<<endl;
+  cout<<"int "<<argv[1]<<"::begins0[]={"<<begins[0];
   for(int i=1;i<begins.size();++i)
     cout<<", "<<begins[i];
   cout<<"};"<<endl<<endl;
 
-  cout<<"int "<<argv[1]<<"::dx[]={"<<xs[0];
+  cout<<"int "<<argv[1]<<"::dx0[]={"<<xs[0];
   for(int i=1;i<xs.size();++i)
     cout<<", "<<xs[i];
   cout<<"};"<<endl<<endl;
 
-  cout<<"int "<<argv[1]<<"::dy[]={"<<ys[0];
+  cout<<"int "<<argv[1]<<"::dy0[]={"<<ys[0];
   for(int i=1;i<ys.size();++i)
     cout<<", "<<ys[i];
   cout<<"};"<<endl<<endl;

@@ -43,14 +43,41 @@ class GridDrawer(Frame):
     outline="black",fill=filler)
 
 def main():
+  h=GridDrawer()
+
   if len(sys.argv)!=3:
     print "%s <hex/d4/d8> <coordinates file>" % (sys.argv[0])
     sys.exit(-1)
 
-  h=GridDrawer()
+  drawer=None
+  if sys.argv[1]=='hex':
+    drawer=h.DrawHex
+  elif sys.argv[1]=='d4' or sys.argv[1]=='d8':
+    drawer=h.DrawSquare
+
+  with open(sys.argv[2],'r') as fin:
+    data=fin.readlines()
+
+  for l in data:
+    if len(l.strip())==0:
+      continue
+    lfp=l.index('{')
+    llp=l.index('}')
+    if l.startswith(sys.argv[1] + "_begins"):
+      begins=[int(i) for i in l[lfp+1:llp].split(',')]
+    if l.startswith(sys.argv[1] + "_dx"):
+      dx=[int(i) for i in l[lfp+1:llp].split(',')]
+    if l.startswith(sys.argv[1] + "_dy"):
+      dy=[int(i) for i in l[lfp+1:llp].split(',')]
+
   for x in range(-30,10):
     for y in range(-30,10):
-      h.DrawHex(x,y,"white")
+      drawer(x,y,"white")
+
+  drawer(0,0,"blue")
+
+  for i in range(begins[3],begins[4]):
+    drawer(dx[i],dy[i],"red")
 
   h.mainloop()
 

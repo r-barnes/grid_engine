@@ -18,9 +18,8 @@ class HexDemo(Frame):
     self.canvas = canvas
     self.size=20
 
-    for x in range(-10,10):
-      for y in range(-10,10):
-        print x,y
+    for x in range(-30,10):
+      for y in range(-30,10):
         self.DrawHex(x,y,"white")
 
   def DrawSquare(self, orgx, orgy, filler):

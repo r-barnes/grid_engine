@@ -1,33 +1,63 @@
 #include "grid_engine.h"
 #include <iostream>
+#include <cstdlib>
 using namespace std;
 
 int main(){
-  typedef grid_engine::grid_engine<int> hex;
-  hex hi(10,10);
+  //Define a general 40x40 grid of integers
+  typedef grid_engine::grid_engine<int> gtype;
+  gtype grid(40,40);
 
-  for(hex::parser i=hi.begin();i.good();++i){
-    cout<<"("<<i.x()<<","<<i.y()<<"):";
-    for(hex::nparser n=i.hexring(1,3);n.good();++n)
-      cout<<"";
-//      cout<<" "<<*n;
-    cout<<endl;
-  }
+  //Set each cell in the grid to a random number
+  for(gtype::parser i=grid.begin();i.good();++i)
+    *i=rand();
 
-//  for(grid_engine::grid_engine<int>::niterator n=hi.niterator(1,1,1,1);n!=hi.end();n++)
-//    cout<<*n<<endl;
+  //Set each cell in the grid to the average value of itself and its neighbours
+  for(gtype::parser i=grid.begin();i.good();++i)
+    for(gtype::nparser n=i.d8ring(1);n.good();++n)
+      *i+=*n;
 
-/*
-	hi(0,0)=3;
-	hi(2,3)=7;
+  //Add to every cell the values of all neighbors within 5
+  for(gtype::parser i=grid.begin();i.good();++i)
+    for(gtype::nparser n=i.d8ring(1,5);n.good();++n)
+      *i+=*n;
 
-	for(conn8_engine<int>::neighbours n=hi.nbegin(4,4,3);n!=hi.nend(4,4,3);n++)
-		*n=5;
+  //Add to every cell the values of all neighbors at distance 5
+  for(gtype::parser i=grid.begin();i.good();++i)
+    for(gtype::nparser n=i.d8ring(5);n.good();++n)
+      *i+=*n;
 
-	for(int y=0;y<10;y++){
-		for(int x=0;x<10;x++)
-			cout<<hi(x,y);
-		cout<<endl;
-	}
-*/
+  //Add to every cell the values of all neighbors at distances 3-5 (inclusive)
+  for(gtype::parser i=grid.begin();i.good();++i)
+    for(gtype::nparser n=i.d8ring(3,5);n.good();++n)
+      *i+=*n;
+
+  //Assuming D4 connectivity...
+  //Add to every cell the values of all neighbors at distances 3-5 (inclusive)
+  for(gtype::parser i=grid.begin();i.good();++i)
+    for(gtype::nparser n=i.d4ring(3,5);n.good();++n)
+      *i+=*n;
+
+  //Assuming hexagonal connectivity...
+  //Add to every cell the values of all neighbors at distances 3-5 (inclusive)
+  for(gtype::parser i=grid.begin();i.good();++i)
+    for(gtype::nparser n=i.hexring(3,5);n.good();++n)
+      *i+=*n;
+
+  //Define a 40x40 hexagonal grid of integers
+  typedef grid_engine::hexgrid<int> hextype;
+  hextype grid(40,40);
+
+  //Add to every cell the values of all hex neighbors at distances 3-5 (inclusive)
+  for(gtype::parser i=grid.begin();i.good();++i)
+    for(gtype::nparser n=i.ring(3,5);n.good();++n)
+      *i+=*n;
+
+  //Define a 40x40 D8 grid of integers
+  typedef grid_engine::d8grid<int> hextype;
+  hextype grid(40,40);
+
+  //Define a 40x40 D4 grid of integers
+  typedef grid_engine::d4grid<int> hextype;
+  hextype grid(40,40);
 }

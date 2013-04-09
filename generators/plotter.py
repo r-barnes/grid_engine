@@ -1,8 +1,4 @@
 #!/usr/bin/python
-
-# hexmap.py
-# Draws one group of hexes.
-
 from Tkinter import *
 
 def frame(root, side):

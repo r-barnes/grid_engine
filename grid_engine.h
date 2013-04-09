@@ -171,7 +171,7 @@ namespace grid_engine{
 					  return tmp;
 				  }
           grid_engine<T>::nparser hexring(int inner_ring, int outer_ring) const {
-            typename grid_engine<T>::nparser temp(my_ge, new hex(), x0, y0, inner_ring, outer_ring);
+            typename grid_engine<T>::nparser temp(my_ge, new hex(), x0, y0, inner_ring, outer_ring+1);
             return temp;
           }
           value_type operator*() const {

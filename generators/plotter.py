@@ -10,17 +10,12 @@ class HexDemo(Frame):
   def __init__(self):
     Frame.__init__(self)
     self.pack(expand=YES, fill=BOTH)
-    self.master.title('Hex Drawing Demo')
-    self.master.iconname('hexdraw')
+    self.master.title('Grid Plotter')
 
     canvas = Canvas()
     canvas.pack(expand=YES, fill=BOTH)
     self.canvas = canvas
     self.size=20
-
-    for x in range(-30,10):
-      for y in range(-30,10):
-        self.DrawHex(x,y,"white")
 
   def DrawSquare(self, orgx, orgy, filler):
     orgx=orgx*self.size
@@ -33,7 +28,6 @@ class HexDemo(Frame):
       orgx, orgy,
       outline="black", fill=filler
     )
-
 
   def DrawHex(self, orgx, orgy, filler):
     oneseg = self.size/4
@@ -52,9 +46,12 @@ class HexDemo(Frame):
     orgx, orgy + twoseg,
     outline="black",fill=filler)
 
+def main():
+  h=HexDemo()
+  for x in range(-30,10):
+    for y in range(-30,10):
+      h.DrawHex(x,y,"white")
 
-if __name__ == '__main__':
+  h.mainloop()
 
-  HexDemo().mainloop()
-
-  
+main()

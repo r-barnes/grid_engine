@@ -52,24 +52,30 @@ namespace grid_engine {
           neighbours N;
           int i, x0, y0, outer_ring, current_ring;
 
+          bool valid(){
+            return my_ge.in_grid(x0+N.dx[i],y0+N.dy[i]);
+          }
+
           void advance_until_valid(){
+            assert(i!=-1);
             do {
               ++i;
               if(i==N.nlen || i==N.begins[outer_ring+1]){
                 i=-1;
                 return;
               }
-            } while(!my_ge.in_grid(x0+N.dx[i],y0+N.dy[i]));
+            } while(!valid());
           }
 		    public:
-			    nparser ( grid_engine<T> &ge, neighbours N, int x, int y, int inner_ring, int outer_ring) : my_ge(ge), N(N), x0(x), y0(y), outer_ring(outer_ring), current_ring(inner_ring) {
-            assert(ge.in_grid(x,y));
+			    nparser ( grid_engine<T> &ge, neighbours N, int x0, int y0, int inner_ring, int outer_ring) : my_ge(ge), N(N), x0(x0), y0(y0), outer_ring(outer_ring), current_ring(inner_ring) {
+            assert(ge.in_grid(x0,y0));
             assert(current_ring>0);
             assert(outer_ring>0);
             assert(outer_ring>=current_ring);
 
             i=0;
-            advance_until_valid();
+            if(!valid())
+              advance_until_valid();
           }
 			    nparser& operator++(){   //Prefix ++
             advance_until_valid();
@@ -134,16 +140,6 @@ namespace grid_engine {
 		  };
 
 		  parser begin() {return parser(*this, 0, 0);}
-  };
-
-  template<class T>
-  class d8_engine : public grid_engine<T>{
-    public:
-		  d8_engine (int width, int height) : grid_engine<T>(width,height) {}
-
-	  typename grid_engine<T>::nparser nring(int x, int y, int inner_ring, int outer_ring) const {
-      return grid_engine<T>::nparser(*this, x, y, inner_ring, outer_ring);
-	  }
   };
 
 }

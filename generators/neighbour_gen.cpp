@@ -99,10 +99,10 @@ int main(int argc, char **argv){
 		}
 	}
 
-  cout<<"class "<<argv[1]<<" : public neighbours {"<<endl;
-  cout<<"public:\nstatic int begins[],dx[],dy[],rmax;};"<<endl<<endl;
+  cout<<"class "<<argv[1]<<" : public neighbours { public: static int begins[],dx[],dy[],rlen,nlen;};"<<endl<<endl;
 
-  cout<<"int "<<argv[1]<<"::rmax="<<begins.size()-1<<";"<<endl;
+  cout<<"int "<<argv[1]<<"::rlen="<<begins.size()<<";"<<endl;
+  cout<<"int "<<argv[1]<<"::nlen="<<xs.size()<<";"<<endl;
   cout<<"int "<<argv[1]<<"::begins[]={"<<begins[0];
   for(int i=1;i<begins.size();++i)
     cout<<", "<<begins[i];

@@ -3,12 +3,15 @@
 using namespace std;
 
 int main(){
-	conn8_engine<int> hi(3,3);
+  typedef grid_engine::grid_engine<int> hex;
+  hex hi(3,3);
 
-  
+  for(hex::parser i=hi.begin();i.good();i++)
+    for(hex::nparser n=i.hexring(1,4);n.good();n++)
+      cout<<*n<<endl;  
 
-  for(grid_engine<int>::niterator n=hi.niterator(1,1,1,1);n!=hi.end();n++)
-    cout<<*n<<endl;
+//  for(grid_engine::grid_engine<int>::niterator n=hi.niterator(1,1,1,1);n!=hi.end();n++)
+//    cout<<*n<<endl;
 
 /*
 	hi(0,0)=3;

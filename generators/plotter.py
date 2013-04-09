@@ -13,6 +13,9 @@ class GridDrawer(Frame):
     self.canvas = canvas
     self.size=20
 
+  def refresh(self):
+    self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+
   def DrawSquare(self, orgx, orgy, filler):
     orgx=orgx*self.size
     orgy=orgy*self.size
@@ -61,23 +64,23 @@ def main():
   for l in data:
     if len(l.strip())==0:
       continue
-    lfp=l.index('{')
-    llp=l.index('}')
-    if l.startswith(sys.argv[1] + "_begins"):
-      begins=[int(i) for i in l[lfp+1:llp].split(',')]
-    if l.startswith(sys.argv[1] + "_dx"):
-      dx=[int(i) for i in l[lfp+1:llp].split(',')]
-    if l.startswith(sys.argv[1] + "_dy"):
-      dy=[int(i) for i in l[lfp+1:llp].split(',')]
+    if l.startswith("int " + sys.argv[1] + "::begins"):
+      begins=[int(i) for i in l[l.index('{')+1:l.index('}')].split(',')]
+    if l.startswith("int " + sys.argv[1] + "::dx"):
+      dx=[int(i) for i in l[l.index('{')+1:l.index('}')].split(',')]
+    if l.startswith("int " + sys.argv[1] + "::dy"):
+      dy=[int(i) for i in l[l.index('{')+1:l.index('}')].split(',')]
 
-  for x in range(-30,10):
-    for y in range(-30,10):
+  for x in range(-30,30):
+    for y in range(-30,30):
       drawer(x,y,"white")
 
   drawer(0,0,"blue")
 
-  for i in range(begins[3],begins[4]):
+  for i in range(begins[1],begins[2]):
     drawer(dx[i],dy[i],"red")
+
+  h.refresh()
 
   h.mainloop()
 

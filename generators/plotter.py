@@ -12,55 +12,51 @@ def frame(root, side):
 
 class HexDemo(Frame):
   def __init__(self):
-	Frame.__init__(self)
-	self.pack(expand=YES, fill=BOTH)
-	self.master.title('Hex Drawing Demo')
-	self.master.iconname('hexdraw')
+    Frame.__init__(self)
+    self.pack(expand=YES, fill=BOTH)
+    self.master.title('Hex Drawing Demo')
+    self.master.iconname('hexdraw')
 
-	canvas = Canvas()
-	canvas.pack(expand=YES, fill=BOTH)
-	self.canvas = canvas;
+    canvas = Canvas()
+    canvas.pack(expand=YES, fill=BOTH)
+    self.canvas = canvas
+    self.size=10
 
-	# These are the three in the middle
-	self.DrawHex('one', (50, 10), 40)
-	self.DrawHex('two', (50, 50), 40)
-	self.DrawHex('thr', (50, 90), 40)
+    for x in range(-10,10):
+      for y in range(-10,10):
+        print x,y
+        self.DrawHex(x,y,"white")
 
-	# These are the two on the left
-	self.DrawHex('fou', (20, 30), 40)
-	self.DrawHex('fiv', (80, 30), 40)
+  def DrawSquare(self, orgx, orgy, filler):
+    orgx=orgx*self.size
+    orgy=orgy*self.size
+    self.hex = self.canvas.create_polygon(
+      orgx, orgy,
+      orgx+self.size, orgy,
+      orgx+self.size, orgy+self.size,
+      orgx, orgy+self.size,
+      orgx, orgy,
+      outline="black", fill=filler
+    )
 
-	# And, these are the two on the right
-	self.DrawHex('six', (20, 70), 40)
-	self.DrawHex('sev', (80, 70), 40)
 
-
-  def DrawHex(self, name, origin, size):
-    oneseg = size/4
-    twoseg = oneseg*2	# same as size/2
-
-    # Get the x and y from the tuple
-    orgx = origin[0]
-    orgy = origin[1]
-
-    # Delete an old one
-    try:
-        self.canvas.delete(name)
-    except:
-        pass
+  def DrawHex(self, orgx, orgy, filler):
+    oneseg = self.size/4
+    twoseg = oneseg*2  # same as size/2
+    orgx*=self.size
+    orgy*=self.size
 
     # Create a new one
     self.hex = self.canvas.create_polygon( 
     orgx, orgy + twoseg,
     orgx + oneseg, orgy,
     orgx + oneseg + twoseg, orgy,
-    orgx + size , orgy + twoseg,
-    orgx + oneseg + twoseg, orgy + size,
-    orgx + oneseg, orgy + size,
+    orgx + self.size , orgy + twoseg,
+    orgx + oneseg + twoseg, orgy + self.size,
+    orgx + oneseg, orgy + self.size,
     orgx, orgy + twoseg,
-    tags=name, width=1, fill="white", outline="black")
+    outline="black",fill=filler)
 
-    pass
 
 if __name__ == '__main__':
 

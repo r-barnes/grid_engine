@@ -1,5 +1,6 @@
 #!/usr/bin/python
 from Tkinter import *
+import sys
 
 def frame(root, side):
   w = Frame(root)
@@ -47,6 +48,10 @@ class HexDemo(Frame):
     outline="black",fill=filler)
 
 def main():
+  if len(sys.argv)!=3:
+    print "%s <hex/d4/d8> <coordinates file>" % (sys.argv[0])
+    sys.exit(-1)
+
   h=HexDemo()
   for x in range(-30,10):
     for y in range(-30,10):

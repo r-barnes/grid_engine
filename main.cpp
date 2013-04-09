@@ -43,21 +43,4 @@ int main(){
   for(gtype::parser i=grid.begin();i.good();++i)
     for(gtype::nparser n=i.hexring(3,5);n.good();++n)
       *i+=*n;
-
-  //Define a 40x40 hexagonal grid of integers
-  typedef grid_engine::hexgrid<int> hextype;
-  hextype grid(40,40);
-
-  //Add to every cell the values of all hex neighbors at distances 3-5 (inclusive)
-  for(gtype::parser i=grid.begin();i.good();++i)
-    for(gtype::nparser n=i.ring(3,5);n.good();++n)
-      *i+=*n;
-
-  //Define a 40x40 D8 grid of integers
-  typedef grid_engine::d8grid<int> hextype;
-  hextype grid(40,40);
-
-  //Define a 40x40 D4 grid of integers
-  typedef grid_engine::d4grid<int> hextype;
-  hextype grid(40,40);
 }

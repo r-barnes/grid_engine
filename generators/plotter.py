@@ -2,11 +2,6 @@
 from Tkinter import *
 import sys
 
-def frame(root, side):
-  w = Frame(root)
-  w.pack(side=side, expand=YES, fill=BOTH)
-  return w
-
 class GridDrawer(Frame):
   def __init__(self):
     Frame.__init__(self)

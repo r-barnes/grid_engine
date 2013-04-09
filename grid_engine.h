@@ -49,8 +49,8 @@ namespace grid_engine {
 	    class nparser {
 		    private:
 			    grid_engine<T> &my_ge;
-          int i, x0, y0, outer_ring, current_ring;
           neighbours N;
+          int i, x0, y0, outer_ring, current_ring;
 
           void advance_until_valid(){
             while(!my_ge.in_grid(x0+N.dx[i],y0+N.dy[i])){
@@ -62,7 +62,7 @@ namespace grid_engine {
             }
           }
 		    public:
-			    nparser ( grid_engine<T> &ge, neighbours N, int x, int y, int inner_ring, int outer_ring) : my_ge(ge), N(N), x0(x), y0(y), current_ring(inner_ring), outer_ring(outer_ring) {
+			    nparser ( grid_engine<T> &ge, neighbours N, int x, int y, int inner_ring, int outer_ring) : my_ge(ge), N(N), x0(x), y0(y), outer_ring(outer_ring), current_ring(inner_ring) {
             assert(ge.in_grid(x,y));
             assert(current_ring>0);
             assert(outer_ring>0);

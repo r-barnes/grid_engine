@@ -18,7 +18,7 @@ class grid_cell{
     int x,y;
     grid_cell(int x, int y) : x(x), y(y) {}
     grid_cell(){}
-    bool operator< (const grid_cell& a) const { return y<a.y || x<a.x; }
+		bool operator< (const grid_cell& a) const { return x<a.x || (x==a.x && y<a.y); }
 };
 
 int main(int argc, char **argv){
@@ -34,7 +34,7 @@ int main(int argc, char **argv){
   set<grid_cell> used;
   int ring=0;
 
-	hex_edge.push(grid_cell(-1,-1));
+	hex_edge.push(grid_cell(999999,999999));
 	hex_edge.push(grid_cell(0,0));
 
   begins.push_back(0);
@@ -45,12 +45,12 @@ int main(int argc, char **argv){
 		grid_cell c=hex_edge.front();
 		hex_edge.pop();
 
-		if(c.x==-1){
+		if(c.x==999999){
       ring++;
       if(ring>=maxrings)
         break;
       begins.push_back(xs.size());
-			hex_edge.push(grid_cell(-1,-1));
+			hex_edge.push(grid_cell(999999,999999));
 			continue;
 		}
 

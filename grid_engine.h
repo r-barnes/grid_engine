@@ -86,26 +86,32 @@ namespace grid_engine {
           bool good() const {
             return i!=-1;
           }
+          int x() const {
+            return x0+N.dx[i];
+          }
+          int y() const {
+            return y0+N.dy[i];
+          }
 	    };
 
 		  class parser {
 			  private:
 				  grid_engine<T> &my_ge;
-				  int x,y;
+				  int x0,y0;
 			  public:
-				  parser (grid_engine<T> &ge, int x0, int y0) : my_ge(ge), x(x0), y(y0) {}
+				  parser (grid_engine<T> &ge, int x0, int y0) : my_ge(ge), x0(x0), y0(y0) {}
 
 				  reference       operator*(){ return my_ge(x,y); }
 				  parser& operator++(){   //Prefix ++
-					  ++x;
-					  if(x==my_ge.width()){
-						  x=0;
-						  ++y;
+					  ++x0;
+					  if(x0==my_ge.width()){
+						  x0=0;
+						  ++y0;
 					  }
 					  return *this;
 				  }
           bool good() const {
-            return x<my_ge.width() && y<my_ge.height();
+            return x0<my_ge.width() && y0<my_ge.height();
           }
 				  parser operator++(int){ //Postfix ++
 					  parser tmp=*this;
@@ -113,11 +119,17 @@ namespace grid_engine {
 					  return tmp;
 				  }
           grid_engine<T>::nparser hexring(int inner_ring, int outer_ring) const {
-            typename grid_engine<T>::nparser temp(my_ge, hex(), x, y, inner_ring, outer_ring);
+            typename grid_engine<T>::nparser temp(my_ge, hex(), x0, y0, inner_ring, outer_ring);
             return temp;
           }
           value_type operator*() const {
-            return my_ge(x,y);
+            return my_ge(x0,y0);
+          }
+          int x() const {
+            return x0;
+          }
+          int y() const {
+            return y0;
           }
 		  };
 
@@ -129,8 +141,8 @@ namespace grid_engine {
     public:
 		  d8_engine (int width, int height) : grid_engine<T>(width,height) {}
 
-	  typename grid_engine<T>::neighbours nring(int x, int y, int inner_ring, int outer_ring) const {
-      return grid_engine<T>::neighbours(*this, x, y, inner_ring, outer_ring);
+	  typename grid_engine<T>::nparser nring(int x, int y, int inner_ring, int outer_ring) const {
+      return grid_engine<T>::nparser(*this, x, y, inner_ring, outer_ring);
 	  }
   };
 

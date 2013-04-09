@@ -59,6 +59,7 @@ int main(int argc, char **argv){
 
 	edge.push(grid_cell(999999,999999));
 	edge.push(grid_cell(0,0));
+  used.push(grid_cell(0,0));
 
   begins.push_back(0);
   xs.push_back(0);

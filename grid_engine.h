@@ -153,7 +153,7 @@ namespace grid_engine{
 			  public:
 				  parser (grid_engine<T> &ge, int x0, int y0) : my_ge(ge), x0(x0), y0(y0) {}
 
-				  reference       operator*(){ return my_ge(x,y); }
+				  reference operator*(){ return my_ge(x0,y0); }
 				  parser& operator++(){   //Prefix ++
 					  ++x0;
 					  if(x0==my_ge.width()){
@@ -200,5 +200,12 @@ namespace grid_engine{
 
 		  parser begin() {return parser(*this, 0, 0);}
   };
-
+/*
+  template <class T>
+  class d8grid : grid_engine<T> {
+    typename grid_engine<T>::nparser ring(int inner_ring, int outer_ring) const {
+      return grid_engine<T>::hexring(inner_ring, outer_ring);
+    }
+  };
+*/
 }

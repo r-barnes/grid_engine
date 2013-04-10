@@ -78,29 +78,53 @@ namespace grid_engine{
 	    class nparser {
 		    private:
 			    grid_engine<T> &my_ge;
-          neighbours *N;
-          int i, x0, y0, outer_ring;
-          int curx, cury;
-          bool toroid;
+          neighbours *N;  ///< Connectivity class of the grid ( Hex, D4, D8 )
+          int i;          ///< Neighbour currently being considered
+          int x0;         ///< x-coordinate of center of neighbourhood
+          int y0;         ///< y-coordinate of center of neighbourhood
+          int outer_ring; ///< Outermost (inclusive) ring of neighbours to consider
+          int curx;       ///< Current x-coordinate of the parser
+          int cury;       ///< Current y-coordinate of the parser
+          bool toroid;    ///< If true, the neighbourhood wraps around the grid's edges
+          ///True if the parser's current coordinates are within the grid. Always true for a torus.
           bool valid() const;
+          ///Increment the parser until it points at a coordinate within the grid
           void advance_until_valid();
 		    public:
+          /**
+            @brief Makes a new neighbour parser
+            @param[in] ge      Grid the neighbour parser refers to
+            @param[in] N       Connectivity class of the grid ( Hex, D4, D8 )
+            @param[in] x0      x-coordinate of center of neighbourhood
+            @param[in] y0      y-coordinate of center of neighbourhood
+            @param[in] inner_ring   Innermost ring of neighbours to consider
+            @param[in] outer_ring   Outermost (inclusive) ring of neighbours to consider
+            @param[in] toroid  If true, then the neighbourhoods wrap around grid's edges
+          */
 			    nparser ( grid_engine<T> &ge, neighbours *N, int x0, int y0, int inner_ring, int outer_ring, bool toroid=false);
+          ///Increments the parser to the next neighbour
 			    nparser& operator++();
+          ///Increments the parser to the next neighbour
 			    nparser operator++(int);
+          ///Refernce to the data at the coordinate the parser is currently pointing it
 			    reference operator*() const;
+          ///Returns true if the parser can be safely incremented again
           bool good() const;
+          ///Curent x-coordinate of parser
           int x()  const;
+          ///Curent y-coordinate of the parser
           int y()  const;
+          ///Curent x-offset of parser
           int dx() const;
+          ///Curent y-offset of parser
           int dy() const;
 	    };
 
 		  class parser {
 			  private:
 				  grid_engine<T> &my_ge;
-				  int x0; //< Current x-coordinate of the parser
-          int y0; //< Current y-coordinate of the parser
+				  int x0; ///< Current x-coordinate of the parser
+          int y0; ///< Current y-coordinate of the parser
 			  public:
 				  parser (grid_engine<T> &ge, int x0, int y0);
           ///Refernce to the data at the coordinate the parser is currently pointing it

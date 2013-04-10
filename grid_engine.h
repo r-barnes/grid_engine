@@ -136,6 +136,61 @@ namespace grid_engine{
   };
 
 
+////////////////////
+//grid_engine
+////////////////////
+
+  template <class T>
+  typename grid_engine<T>::parser
+  grid_engine<T>::begin() {return parser(*this, 0, 0);}
+
+  template <class T>
+  typename grid_engine<T>::reference
+  grid_engine<T>::operator()(int x, int y){
+    assert(in_grid(x,y));
+    return data[y][x];
+  }
+
+  template <class T>
+  typename grid_engine<T>::reference
+  grid_engine<T>::operator()(const nparser &n){
+    assert(in_grid(n.x(),n.y()));
+    return data[n.y()][n.x()];
+  }
+
+  template <class T>
+  typename grid_engine<T>::const_reference
+  grid_engine<T>::operator()(int x, int y) const {
+    assert(in_grid(x,y));
+    return data[y][x];
+  }
+
+  template <class T>
+  void grid_engine<T>::fill(const value_type &val) {
+    for(typename std::vector< std::vector<T> >::iterator i=data.begin();i!=data.end();++i)
+      std::fill((*i).begin(),(*i).end(),val);
+  }
+
+  template <class T>
+  std::string grid_engine<T>::to_str() const {
+    std::stringstream ss;
+    ss<<width()<<" "<<height();
+    for(int y=0;y<height();++y)
+    for(int x=0;x< width();++x)
+      ss<<" "<<data[y][x];
+    return ss.str();
+  }
+
+  template <class T>
+  void grid_engine<T>::from_str(const std::string &str){
+    std::stringstream ss(str);
+    int the_width,the_height;
+    ss>>width>>height;
+    resize(width,height);
+    for(int y=0;y<height();++y)
+    for(int x=0;x< width();++x)
+      ss>>data[y][x];
+  }
 
   template <class T>
   void grid_engine<T>::resize(int Gwidth, int Gheight){
@@ -348,62 +403,6 @@ namespace grid_engine{
   template <class T>
   int grid_engine<T>::parser::y() const {
     return y0;
-  }
-
-////////////////////
-//grid_engine
-////////////////////
-
-  template <class T>
-  typename grid_engine<T>::parser
-  grid_engine<T>::begin() {return parser(*this, 0, 0);}
-
-  template <class T>
-  typename grid_engine<T>::reference
-  grid_engine<T>::operator()(int x, int y){
-    assert(in_grid(x,y));
-    return data[y][x];
-  }
-
-  template <class T>
-  typename grid_engine<T>::reference
-  grid_engine<T>::operator()(const nparser &n){
-    assert(in_grid(n.x(),n.y()));
-    return data[n.y()][n.x()];
-  }
-
-  template <class T>
-  typename grid_engine<T>::const_reference
-  grid_engine<T>::operator()(int x, int y) const {
-    assert(in_grid(x,y));
-    return data[y][x];
-  }
-
-  template <class T>
-  void grid_engine<T>::fill(const value_type &val) {
-    for(typename std::vector< std::vector<T> >::iterator i=data.begin();i!=data.end();++i)
-      std::fill((*i).begin(),(*i).end(),val);
-  }
-
-  template <class T>
-  std::string grid_engine<T>::to_str() const {
-    std::stringstream ss;
-    ss<<width()<<" "<<height();
-    for(int y=0;y<height();++y)
-    for(int x=0;x< width();++x)
-      ss<<" "<<data[y][x];
-    return ss.str();
-  }
-
-  template <class T>
-  void grid_engine<T>::from_str(const std::string &str){
-    std::stringstream ss(str);
-    int the_width,the_height;
-    ss>>width>>height;
-    resize(width,height);
-    for(int y=0;y<height();++y)
-    for(int x=0;x< width();++x)
-      ss>>data[y][x];
   }
 
 }

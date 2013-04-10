@@ -5,7 +5,7 @@ Examples
 
 It can handle hexagonal, 4-connected, and 8-connected grids.
 
-Current it cannot handle toroidal grids, but this will be added in the future.
+Any of these connectivities can be used in a toroidal fashion, such that the edges of the grid wrap around.
 
 The examples below show how the class may be used.
 

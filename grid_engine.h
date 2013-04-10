@@ -102,18 +102,33 @@ namespace grid_engine{
 				  int x0,y0;
 			  public:
 				  parser (grid_engine<T> &ge, int x0, int y0);
-				  reference operator*() const;
+				  reference operator*();
+          ///Increments the parser to the next coordinate
 				  parser& operator++();
+          ///Increments the parser to the next coordinate
 				  parser operator++(int);
+          ///Returns true if the parser can be safely incremented again
           bool good() const;
+          ///Returns a hexagonal neighbour parser
           grid_engine<T>::nparser hexring(int inner_ring, int outer_ring) const;
+          ///Returns a D8 neighbour parser
           grid_engine<T>::nparser d8ring(int inner_ring, int outer_ring) const;
+          ///Returns a D4 neighbour parser
           grid_engine<T>::nparser d4ring(int inner_ring, int outer_ring) const;
-
+          ///Returns a hexagonal toroidal neighbour parser
           grid_engine<T>::nparser hextring(int inner_ring, int outer_ring) const;
+          ///Returns a D8 toroidal neighbour parser
           grid_engine<T>::nparser d8tring(int inner_ring, int outer_ring=-1) const;
+          ///Returns a D4 toroidal neighbour parser
           grid_engine<T>::nparser d4tring(int inner_ring, int outer_ring=-1) const;
+<<<<<<< Updated upstream
+=======
+          ///Refernce to the data at the coordinate the parser is currently pointing it
+          reference operator*() const;
+          ///Parser's x-coordinate
+>>>>>>> Stashed changes
           int x() const;
+          ///Parser's y-coordinate
           int y() const;
 		  };
 

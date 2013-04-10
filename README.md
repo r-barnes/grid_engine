@@ -1,5 +1,6 @@
-Examples
-========
+grid_engine
+===========
+**Grid Engine is not (as of 02013-04-10) yet ready for public use.**
 
 **grid_engine** is a class for flexibily working with different kinds of two-dimensional grids.
 
@@ -7,7 +8,16 @@ It can handle hexagonal, 4-connected, and 8-connected grids.
 
 Any of these connectivities can be used in a toroidal fashion, such that the edges of the grid wrap around.
 
-The examples below show how the class may be used.
+Road Map to Public Use
+======================
+ 1. Fix toroidal wrappings
+ 2. Verify correctness of every function
+ 3. Develop a test suite
+ 4. Improved examples
+ 5. Improved documentation
+
+Examples
+========
 
     //Define a general 40x40 grid of integers
     typedef grid_engine::grid_engine<int> gtype;

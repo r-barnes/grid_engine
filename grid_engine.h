@@ -104,7 +104,7 @@ namespace grid_engine{
           int curx, cury;
           bool toroid;
 
-          bool valid(){
+          bool valid() const {
             if(toroid)
               return true;
             else
@@ -123,8 +123,8 @@ namespace grid_engine{
               cury=y0+N->dy(i);
             } while(!valid());
 
-            curx=curx%my_ge.width();
-            cury=cury%my_ge.height();
+            curx%=my_ge.width();
+            cury%=my_ge.height();
           }
 		    public:
 			    nparser ( grid_engine<T> &ge, neighbours *N, int x0, int y0, int inner_ring, int outer_ring, bool toroid=false) : my_ge(ge), N(N), x0(x0), y0(y0), outer_ring(outer_ring), current_ring(inner_ring), toroid(toroid) {
@@ -134,9 +134,11 @@ namespace grid_engine{
             assert(outer_ring>=current_ring);
 
             i=N->begins(inner_ring);
+
             if(!valid())
               advance_until_valid();
           }
+
 			    nparser& operator++(){   //Prefix ++
             advance_until_valid();
             return *this;
@@ -146,6 +148,7 @@ namespace grid_engine{
 				    ++*this;
 				    return tmp;
 			    }
+
 			    value_type operator*() const {
 				    return my_ge(curx,cury);
 			    }
@@ -168,6 +171,7 @@ namespace grid_engine{
 				  parser (grid_engine<T> &ge, int x0, int y0) : my_ge(ge), x0(x0), y0(y0) {}
 
 				  reference operator*(){ return my_ge(x0,y0); }
+
 				  parser& operator++(){   //Prefix ++
 					  ++x0;
 					  if(x0==my_ge.width()){
@@ -176,45 +180,40 @@ namespace grid_engine{
 					  }
 					  return *this;
 				  }
-          bool good() const {
-            return x0<my_ge.width() && y0<my_ge.height();
-          }
 				  parser operator++(int){ //Postfix ++
 					  parser tmp=*this;
 					  ++*this;
 					  return tmp;
 				  }
 
+          bool good() const {
+            return x0<my_ge.width() && y0<my_ge.height();
+          }
+
           grid_engine<T>::nparser hexring(int inner_ring, int outer_ring=-1) const {
             if(outer_ring==-1) outer_ring=inner_ring;
-            typename grid_engine<T>::nparser temp(my_ge, &nhex, x0, y0, inner_ring, outer_ring);
-            return temp;
+            return grid_engine<T>::nparser(my_ge, &nhex, x0, y0, inner_ring, outer_ring);
           }
           grid_engine<T>::nparser d8ring(int inner_ring, int outer_ring=-1) const {
             if(outer_ring==-1) outer_ring=inner_ring;
-            typename grid_engine<T>::nparser temp(my_ge, &nd8, x0, y0, inner_ring, outer_ring);
-            return temp;
+            return grid_engine<T>::nparser(my_ge, &nd8, x0, y0, inner_ring, outer_ring);
           }
           grid_engine<T>::nparser d4ring(int inner_ring, int outer_ring=-1) const {
             if(outer_ring==-1) outer_ring=inner_ring;
-            typename grid_engine<T>::nparser temp(my_ge, &nd4, x0, y0, inner_ring, outer_ring);
-            return temp;
+            return grid_engine<T>::nparser(my_ge, &nd4, x0, y0, inner_ring, outer_ring);
           }
 
           grid_engine<T>::nparser hextring(int inner_ring, int outer_ring=-1) const {
             if(outer_ring==-1) outer_ring=inner_ring;
-            typename grid_engine<T>::nparser temp(my_ge, &nhex, x0, y0, inner_ring, outer_ring, true);
-            return temp;
+            return grid_engine<T>::nparser(my_ge, &nhex, x0, y0, inner_ring, outer_ring, true);
           }
           grid_engine<T>::nparser d8tring(int inner_ring, int outer_ring=-1) const {
             if(outer_ring==-1) outer_ring=inner_ring;
-            typename grid_engine<T>::nparser temp(my_ge, &nd8, x0, y0, inner_ring, outer_ring, true);
-            return temp;
+            return grid_engine<T>::nparser(my_ge, &nd8, x0, y0, inner_ring, outer_ring, true);
           }
           grid_engine<T>::nparser d4tring(int inner_ring, int outer_ring=-1) const {
             if(outer_ring==-1) outer_ring=inner_ring;
-            typename grid_engine<T>::nparser temp(my_ge, &nd4, x0, y0, inner_ring, outer_ring, true);
-            return temp;
+            return grid_engine<T>::nparser(my_ge, &nd4, x0, y0, inner_ring, outer_ring, true);
           }
 
           value_type operator*() const {

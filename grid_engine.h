@@ -10,6 +10,7 @@
 
 namespace grid_engine {
 
+///Base class facilitating polymorphism of Hex, D4, and D8
 class neighbours {
   public:
     virtual int dx(int i)     const { return -1; }
@@ -19,6 +20,7 @@ class neighbours {
     virtual int rlen()        const { return -1; }
 };
 
+///Used to store hexagonal neighbours at varying distances
 class Hex : public neighbours {
   private:
     static int begins0[],dx0[],dy0[],rlen0,nlen0;
@@ -30,6 +32,7 @@ class Hex : public neighbours {
     int nlen  ()      const { return nlen0;      }
 };
 
+///Used to store D8 neighbours at varying distances
 class D8 : public neighbours {
   private:
     static int begins0[],dx0[],dy0[],rlen0,nlen0;
@@ -41,6 +44,7 @@ class D8 : public neighbours {
     int nlen  ()      const { return nlen0;      }
 };
 
+///Used to store D4 neighbours at varying distances
 class D4 : public neighbours {
   private:
     static int begins0[],dx0[],dy0[],rlen0,nlen0;
@@ -58,15 +62,16 @@ class D4 : public neighbours {
 
 namespace grid_engine{
 
-  D8 nd8;
-  D4 nd4;
-  Hex nhex;
+  D8 nd8;   ///< Singleton instance of the D8 neighbourhood
+  D4 nd4;   ///< Singleton instance of the D4 neighbourhood
+  Hex nhex; ///< Singleton instance of the Hex neighbourhood
 
+  ///A grid of data
   template <class T>
   class grid_engine {
 	  typedef std::vector< std::vector<T> > arr2d;
 	  private:
-		  arr2d data;
+		  arr2d data; ///< Storage variable for the grid
 	  public:
 		  typedef T		     value_type;
 		  typedef T*       pointer;
@@ -75,6 +80,7 @@ namespace grid_engine{
 		  typedef const T& const_reference;
 		  typedef int		   size_type;
 
+      ///Used to examine neighbours at varying distances around a central cell
 	    class nparser {
 		    private:
 			    grid_engine<T> &my_ge;
@@ -106,7 +112,7 @@ namespace grid_engine{
 			    nparser& operator++();
           ///Increments the parser to the next neighbour
 			    nparser operator++(int);
-          ///Refernce to the data at the coordinate the parser is currently pointing it
+          ///Reference to the data at the coordinate the parser is currently pointing it
 			    reference operator*() const;
           ///Returns true if the parser can be safely incremented again
           bool good() const;
@@ -120,6 +126,7 @@ namespace grid_engine{
           int dy() const;
 	    };
 
+      ///Used to examine the cells of a grid
 		  class parser {
 			  private:
 				  grid_engine<T> &my_ge;
@@ -127,7 +134,7 @@ namespace grid_engine{
           int y0; ///< Current y-coordinate of the parser
 			  public:
 				  parser (grid_engine<T> &ge, int x0, int y0);
-          ///Refernce to the data at the coordinate the parser is currently pointing it
+          ///Reference to the data at the coordinate the parser is currently pointing it
 				  reference operator*() const;
           ///Increments the parser to the next coordinate
 				  parser& operator++();
@@ -155,20 +162,35 @@ namespace grid_engine{
 
       ///Resize grid. Non-destructive during growth.
 		  void resize(int Gwidth, int Gheight);
-      ///Resize grid. 
+      ///Resize grid. Non-destructive during growth, only new elements are set to default.
 		  void resize(int Gwidth, int Gheight, reference default_item);
+      ///Returns true if (x,y) is within the bounds of the grid
       bool in_grid(int x, int y) const;
+      ///Width of the grid
 		  size_type width() const;
+      ///Height of the grid
 		  size_type height() const;
+      ///Construct a new grid
 		  grid_engine();
+      ///Construct a new grid of the given width and height
 		  grid_engine(int Gwidth, int Gheight);
+      ///Construct a new grid of the given width and height, all cells set to default
+		  grid_engine(int Gwidth, int Gheight, reference default_item);
+      ///Destory all data in the grid
 		  void clear();
+      ///Parser pointing to the first cell of the grid
 		  parser begin();
+      ///Reference to the data at (x,y)
 		  reference operator()(int x, int y);
+      ///Reference to the data at the grid cell the neighbour parser is currently pointing it
 		  reference operator()(const nparser &n);
+      ///Constant Reference to the data at (x,y)
 		  const_reference operator()(int x, int y) const;
+      ///Set the entire grid to val
       void fill(const value_type &val);
+      ///Print the grid in a well-defined string format. Can be read with from_str().
       std::string to_str() const;
+      ///Read a grid printed with to_str()
       void from_str(const std::string &str);
   };
 
@@ -266,6 +288,11 @@ namespace grid_engine{
   template <class T>
   grid_engine<T>::grid_engine(int Gwidth, int Gheight){
 	  resize(Gwidth,Gheight);
+  }
+
+  template <class T>
+  grid_engine<T>::grid_engine(int Gwidth, int Gheight, reference default_item){
+	  resize(Gheight, Gwidth, default_item));
   }
 
   template <class T>

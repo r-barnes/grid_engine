@@ -1,3 +1,6 @@
+#ifndef _rbarnes_grid_engine_
+#define _rbarnes_grid_engine_
+
 #include <vector>
 #include <iostream>
 #include <cassert>
@@ -261,3 +264,4 @@ namespace grid_engine{
       }
   };
 }
+#endif

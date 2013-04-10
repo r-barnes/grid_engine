@@ -254,6 +254,7 @@ namespace grid_engine{
         std::stringstream ss(str);
         int the_width,the_height;
         ss>>width>>height;
+        resize(width,height);
         for(int y=0;y<height();++y)
         for(int x=0;x< width();++x)
           ss>>data[y][x];

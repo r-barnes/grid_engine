@@ -113,7 +113,7 @@ namespace grid_engine{
           grid_engine<T>::nparser hextring(int inner_ring, int outer_ring) const;
           grid_engine<T>::nparser d8tring(int inner_ring, int outer_ring=-1) const;
           grid_engine<T>::nparser d4tring(int inner_ring, int outer_ring=-1) const;
-          value_type operator*() const;
+          reference operator*() const;
           int x() const;
           int y() const;
 		  };
@@ -390,7 +390,7 @@ namespace grid_engine{
   }
 
   template <class T>
-  typename grid_engine<T>::value_type
+  typename grid_engine<T>::reference
   grid_engine<T>::parser::operator*() const {
     return my_ge(x0,y0);
   }

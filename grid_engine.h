@@ -89,10 +89,6 @@ namespace grid_engine{
 		  grid_engine(int Gwidth, int Gheight){
 			  resize(Gwidth,Gheight);
 		  }
-		  reference operator()(int x, int y)
-			  {return data[y][x];}
-		  const_reference operator()(int x, int y) const
-			  {return data[y][x];}
 		  void clear()
 			  {data.clear();}
 
@@ -228,5 +224,18 @@ namespace grid_engine{
 		  };
 
 		  parser begin() {return parser(*this, 0, 0);}
+
+		  reference operator()(int x, int y){
+        assert(in_grid(x,y));
+        return data[y][x];
+      }
+		  reference operator()(const nparser &n){
+        assert(in_grid(n.x(),n.y()));
+        return data[n.y()][n.x()];
+      }
+		  const_reference operator()(int x, int y) const {
+        assert(in_grid(x,y));
+        return data[y][x];
+      }
   };
 }

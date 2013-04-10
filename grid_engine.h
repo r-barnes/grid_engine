@@ -153,7 +153,9 @@ namespace grid_engine{
           int y() const;
 		  };
 
+      ///Resize grid. Non-destructive during growth.
 		  void resize(int Gwidth, int Gheight);
+      ///Resize grid. 
 		  void resize(int Gwidth, int Gheight, reference default_item);
       bool in_grid(int x, int y) const;
 		  size_type width() const;
@@ -230,11 +232,15 @@ namespace grid_engine{
   template <class T>
   void grid_engine<T>::resize(int Gwidth, int Gheight){
 	  data.resize(Gheight, std::vector<T> (Gwidth));
+    for(typename std::vector< std::vector<T> >::iterator i=data.begin();i!=data.end();++i)
+      (*i).resize(Gwidth);
   }
 
   template <class T>
   void grid_engine<T>::resize(int Gwidth, int Gheight, reference default_item){
 	  data.resize(Gheight, std::vector<T> (Gwidth, default_item));
+    for(typename std::vector< std::vector<T> >::iterator i=data.begin();i!=data.end();++i)
+      (*i).resize(Gwidth, default_item);
   }
 
   template <class T>

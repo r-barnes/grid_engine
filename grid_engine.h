@@ -149,15 +149,9 @@ namespace grid_engine{
 			    value_type operator*() const {
 				    return my_ge(curx,cury);
 			    }
-          bool good() const {
-            return i!=-1;
-          }
-          int x() const {
-            return curx;
-          }
-          int y() const {
-            return cury;
-          }
+          bool good() const { return i!=-1; }
+          int x() const { return curx; }
+          int y() const { return cury; }
 	    };
 
 		  class parser {

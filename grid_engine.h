@@ -131,6 +131,8 @@ namespace grid_engine{
             assert(outer_ring>=current_ring);
 
             i=N->begins(inner_ring);
+            curx=x0+N->dx(i);
+            cury=y0+N->dy(i);
 
             if(!valid())
               advance_until_valid();

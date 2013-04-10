@@ -2,6 +2,8 @@
 #include <iostream>
 #include <cassert>
 #include <algorithm>
+#include <string>
+#include <sstream>
 
 namespace grid_engine {
 
@@ -239,6 +241,22 @@ namespace grid_engine{
       void fill(const value_type &val) {
         for(typename std::vector< std::vector<T> >::iterator i=data.begin();i!=data.end();++i)
           std::fill((*i).begin(),(*i).end(),val);
+      }
+      std::string to_str() const {
+        std::stringstream ss;
+        ss<<width()<<" "<<height();
+        for(int y=0;y<height();++y)
+        for(int x=0;x< width();++x)
+          ss<<" "<<data[y][x];
+        return ss.str();
+      }
+      void from_str(const std::string &str){
+        std::stringstream ss(str);
+        int the_width,the_height;
+        ss>>width>>height;
+        for(int y=0;y<height();++y)
+        for(int x=0;x< width();++x)
+          ss>>data[y][x];
       }
   };
 }

@@ -99,9 +99,11 @@ namespace grid_engine{
 		  class parser {
 			  private:
 				  grid_engine<T> &my_ge;
-				  int x0,y0;
+				  int x0; //< Current x-coordinate of the parser
+          int y0; //< Current y-coordinate of the parser
 			  public:
 				  parser (grid_engine<T> &ge, int x0, int y0);
+          ///Refernce to the data at the coordinate the parser is currently pointing it
 				  reference operator*();
           ///Increments the parser to the next coordinate
 				  parser& operator++();
@@ -121,12 +123,7 @@ namespace grid_engine{
           grid_engine<T>::nparser d8tring(int inner_ring, int outer_ring=-1) const;
           ///Returns a D4 toroidal neighbour parser
           grid_engine<T>::nparser d4tring(int inner_ring, int outer_ring=-1) const;
-<<<<<<< Updated upstream
-=======
-          ///Refernce to the data at the coordinate the parser is currently pointing it
-          reference operator*() const;
           ///Parser's x-coordinate
->>>>>>> Stashed changes
           int x() const;
           ///Parser's y-coordinate
           int y() const;

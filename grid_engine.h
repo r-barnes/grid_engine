@@ -19,7 +19,7 @@ class neighbours {
     virtual int rlen()        const { return -1; }
 };
 
-class hex : public neighbours {
+class Hex : public neighbours {
   private:
     static int begins0[],dx0[],dy0[],rlen0,nlen0;
   public:
@@ -30,7 +30,7 @@ class hex : public neighbours {
     int nlen  ()      const { return nlen0;      }
 };
 
-class d8 : public neighbours {
+class D8 : public neighbours {
   private:
     static int begins0[],dx0[],dy0[],rlen0,nlen0;
   public:
@@ -41,7 +41,7 @@ class d8 : public neighbours {
     int nlen  ()      const { return nlen0;      }
 };
 
-class d4 : public neighbours {
+class D4 : public neighbours {
   private:
     static int begins0[],dx0[],dy0[],rlen0,nlen0;
   public:
@@ -58,9 +58,9 @@ class d4 : public neighbours {
 
 namespace grid_engine{
 
-  d8 nd8;
-  d4 nd4;
-  hex nhex;
+  D8 nd8;
+  D4 nd4;
+  Hex nhex;
 
   template <class T>
   class grid_engine {

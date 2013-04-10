@@ -37,6 +37,12 @@ The examples below show how the class may be used.
       for(gtype::nparser n=i.d8ring(3,5);n.good();++n)
         *i+=*n;
 
+    //Add to every cell the values of all neighbors at distances 3-5 (inclusive)
+    //Assume a toroidal grid
+    for(gtype::parser i=grid.begin();i.good();++i)
+      for(gtype::nparser n=i.d8tring(3,5);n.good();++n)
+        *i+=*n;
+
     //Assuming D4 connectivity...
     //Add to every cell the values of all neighbors at distances 3-5 (inclusive)
     for(gtype::parser i=grid.begin();i.good();++i)

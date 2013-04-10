@@ -1,6 +1,7 @@
 #include <vector>
 #include <iostream>
 #include <cassert>
+#include <algorithm>
 
 namespace grid_engine {
 
@@ -236,6 +237,10 @@ namespace grid_engine{
 		  const_reference operator()(int x, int y) const {
         assert(in_grid(x,y));
         return data[y][x];
+      }
+      void fill(const value_type &val) {
+        for(typename std::vector< std::vector<T> >::iterator i=data.begin();i!=data.end();++i)
+          std::fill((*i).begin(),(*i).end(),val);
       }
   };
 }

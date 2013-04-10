@@ -126,8 +126,8 @@ namespace grid_engine{
 		    public:
 			    nparser ( grid_engine<T> &ge, neighbours *N, int x0, int y0, int inner_ring, int outer_ring, bool toroid=false) : my_ge(ge), N(N), x0(x0), y0(y0), outer_ring(outer_ring), current_ring(inner_ring), toroid(toroid) {
             assert(ge.in_grid(x0,y0));
-            assert(current_ring>0);
-            assert(outer_ring>0);
+            assert(current_ring>=0);
+            assert(outer_ring>=0);
             assert(outer_ring>=current_ring);
 
             i=N->begins(inner_ring);
@@ -150,8 +150,10 @@ namespace grid_engine{
 				    return my_ge(curx,cury);
 			    }
           bool good() const { return i!=-1; }
-          int x() const { return curx; }
-          int y() const { return cury; }
+          int x()  const { return curx; }
+          int y()  const { return cury; }
+          int dx() const { return N->dx(i); }
+          int dy() const { return N->dy(i); }
 	    };
 
 		  class parser {

@@ -79,7 +79,7 @@ namespace grid_engine{
 		    private:
 			    grid_engine<T> &my_ge;
           neighbours *N;
-          int i, x0, y0, outer_ring, current_ring;
+          int i, x0, y0, outer_ring;
           int curx, cury;
           bool toroid;
           bool valid() const;
@@ -273,11 +273,11 @@ namespace grid_engine{
   }
 
   template <class T>
-  grid_engine<T>::nparser::nparser ( grid_engine<T> &ge, neighbours *N, int x0, int y0, int inner_ring, int outer_ring, bool toroid) : my_ge(ge), N(N), x0(x0), y0(y0), outer_ring(outer_ring), current_ring(inner_ring), toroid(toroid) {
+  grid_engine<T>::nparser::nparser ( grid_engine<T> &ge, neighbours *N, int x0, int y0, int inner_ring, int outer_ring, bool toroid) : my_ge(ge), N(N), x0(x0), y0(y0), outer_ring(outer_ring), toroid(toroid) {
     assert(ge.in_grid(x0,y0));
-    assert(current_ring>=0);
+    assert(inner_ring>=0);
     assert(outer_ring>=0);
-    assert(outer_ring>=current_ring);
+    assert(outer_ring>=inner_ring);
 
     i=N->begins(inner_ring);
     curx=x0+N->dx(i);

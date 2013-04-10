@@ -102,7 +102,7 @@ namespace grid_engine{
 				  int x0,y0;
 			  public:
 				  parser (grid_engine<T> &ge, int x0, int y0);
-				  reference operator*();
+				  reference operator*() const;
 				  parser& operator++();
 				  parser operator++(int);
           bool good() const;
@@ -113,7 +113,6 @@ namespace grid_engine{
           grid_engine<T>::nparser hextring(int inner_ring, int outer_ring) const;
           grid_engine<T>::nparser d8tring(int inner_ring, int outer_ring=-1) const;
           grid_engine<T>::nparser d4tring(int inner_ring, int outer_ring=-1) const;
-          reference operator*() const;
           int x() const;
           int y() const;
 		  };
@@ -321,7 +320,9 @@ namespace grid_engine{
 
   template <class T>
   typename grid_engine<T>::reference
-  grid_engine<T>::parser::operator*(){ return my_ge(x0,y0); }
+  grid_engine<T>::parser::operator*() const {
+    return my_ge(x0,y0);
+  }
 
   template <class T>
   typename grid_engine<T>::parser&
@@ -387,12 +388,6 @@ namespace grid_engine{
   grid_engine<T>::parser::d4tring(int inner_ring, int outer_ring) const {
     if(outer_ring==-1) outer_ring=inner_ring;
     return grid_engine<T>::nparser(my_ge, &nd4, x0, y0, inner_ring, outer_ring, true);
-  }
-
-  template <class T>
-  typename grid_engine<T>::reference
-  grid_engine<T>::parser::operator*() const {
-    return my_ge(x0,y0);
   }
 
   template <class T>

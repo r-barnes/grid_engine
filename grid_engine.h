@@ -88,7 +88,7 @@ namespace grid_engine{
 			    nparser ( grid_engine<T> &ge, neighbours *N, int x0, int y0, int inner_ring, int outer_ring, bool toroid=false);
 			    nparser& operator++();
 			    nparser operator++(int);
-			    value_type operator*() const;
+			    reference operator*() const;
           bool good() const;
           int x()  const;
           int y()  const;
@@ -104,7 +104,7 @@ namespace grid_engine{
 			  public:
 				  parser (grid_engine<T> &ge, int x0, int y0);
           ///Refernce to the data at the coordinate the parser is currently pointing it
-				  reference operator*();
+				  reference operator*() const;
           ///Increments the parser to the next coordinate
 				  parser& operator++();
           ///Increments the parser to the next coordinate
@@ -303,7 +303,7 @@ namespace grid_engine{
   }
 
   template <class T>
-  typename grid_engine<T>::value_type
+  typename grid_engine<T>::reference
   grid_engine<T>::nparser::operator*() const {
     return my_ge(curx,cury);
   }

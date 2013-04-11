@@ -6,6 +6,27 @@ It can handle hexagonal, 4-connected, and 8-connected grids.
 
 Any of these connectivities can be used in a toroidal fashion, such that the edges of the grid wrap around.
 
+The same grid may be treated as toroidal, non-toroidal, 4-, 8-, or hex-connected without needing to perform any modifications to the data structure. Toroidness and connectivity is not treated as a fundamental aspect of a grid, but, rather, as an artefact of the way a grid is traversed.
+
+Summing into a second grid the neighbours at distances 2-4 of a central cell on a randomly-generated hexagonal first grid wrapped in a toroid is as sample as:
+
+    #include "grid_engine.h"
+    #include <cstdlib>
+
+    int main(){
+      typedef grid_engine::grid_engine<int> gtype;
+
+      gtype grid1(40,40), grid2(40,40);
+
+      for(gtype::parser i=grid1.begin();i.good();++i)
+        *i=rand();
+
+      grid2.fill(0);
+      for(gtype::parser i=grid2.begin();i.good();++i)
+        for(gtype::nparser n=i.hextring(2,4);n.good();++n)
+          *i+=grid1(n);
+    }
+
 Getting Started
 ===============
 

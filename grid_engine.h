@@ -306,10 +306,6 @@ namespace grid_engine{
 
   template <class T>
   bool grid_engine<T>::nparser::valid() const {
-    if(toroid){
-      std::cerr<<"Toroidal implementation does not work yet!"<<std::endl;
-      return false;
-    }
     if(toroid)
       return true;
     else

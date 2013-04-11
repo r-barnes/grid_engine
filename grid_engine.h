@@ -199,6 +199,14 @@ namespace grid_engine{
       /**@brief Print the grid in a well-defined string format; can be read with from_str().
 
          The format is <WIDTH> <HEIGHT> (x0,y0) (x1,y0) ... (xN,y0) (x0,y1) (x1,y1) ... (xN,yN)
+
+         For example:
+         <pre>
+           1 2 3
+           4 5 6
+           7 8 9
+         </pre>
+         becomes: 3 3 1 2 3 4 5 6 7 8 9
       */
       std::string to_str() const;
       ///Read a grid printed with to_str()

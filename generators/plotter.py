@@ -53,10 +53,13 @@ def main():
     sys.exit(-1)
 
   drawer=None
-  if sys.argv[1]=='hex':
+  if sys.argv[1]=='Hex':
     drawer=h.DrawHex
-  elif sys.argv[1]=='d4' or sys.argv[1]=='d8':
+  elif sys.argv[1]=='D4' or sys.argv[1]=='D8':
     drawer=h.DrawSquare
+  else:
+    print "Unrecognised connectivity!"
+    sys.exit(-1)
 
   with open(sys.argv[2],'r') as fin:
     data=fin.readlines()

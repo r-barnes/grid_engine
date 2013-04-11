@@ -66,6 +66,14 @@ namespace grid_engine{
   D4 nd4;   ///< Singleton instance of the D4 neighbourhood
   Hex nhex; ///< Singleton instance of the Hex neighbourhood
 
+  ///Maps an integer i to the range [0,max)
+  static inline int toroidabs(int i, int max){
+    if(i>=0)
+      return i%max;
+    else
+      return max-((-i)%max);
+  }
+
   ///A grid of data
   template <class T>
   class grid_engine {
@@ -325,8 +333,8 @@ namespace grid_engine{
       cury=y0+N->dy(i);
     } while(!valid());
 
-    curx%=my_ge.width();
-    cury%=my_ge.height();
+    curx=toroidabs(curx,my_ge.width() );
+    cury=toroidabs(cury,my_ge.height());
   }
 
   template <class T>

@@ -64,3 +64,7 @@ Examples
     for(gtype::parser i=grid.begin();i.good();++i)
       for(gtype::nparser n=i.hexring(3,5);n.good();++n)
         *i+=*n;
+
+Notes
+=====
+The hexagonal data is stored in a 2D rectangular grid which is internally mapped to a hexagonal space. This mapping shifts columns with odd x-coordinates down a half-cell with respect to columns with even x-coordinates. The user should not normally need to worry about this.

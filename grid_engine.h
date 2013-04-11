@@ -196,7 +196,10 @@ namespace grid_engine{
 		  const_reference operator()(int x, int y) const;
       ///Set the entire grid to val
       void fill(const value_type &val);
-      ///Print the grid in a well-defined string format. Can be read with from_str().
+      /**@brief Print the grid in a well-defined string format; can be read with from_str().
+
+         The format is <WIDTH> <HEIGHT> (x0,y0) (x1,y0) ... (xN,y0) (x0,y1) (x1,y1) ... (xN,yN)
+      */
       std::string to_str() const;
       ///Read a grid printed with to_str()
       void from_str(const std::string &str);

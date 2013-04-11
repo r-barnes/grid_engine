@@ -1,14 +1,20 @@
 grid_engine
 ===========
-**grid_engine** is a class for flexibily working with different kinds of two-dimensional grids.
+**grid_engine** is a class for flexibily working with different kinds of
+two-dimensional grids.
 
 It can handle hexagonal, 4-connected, and 8-connected grids.
 
-Any of these connectivities can be used in a toroidal fashion, such that the edges of the grid wrap around.
+Any of these connectivities can be used in a toroidal fashion, such that the
+edges of the grid wrap around.
 
-The same grid may be treated as toroidal, non-toroidal, 4-, 8-, or hex-connected without needing to perform any modifications to the data structure. Toroidness and connectivity is not treated as a fundamental aspect of a grid, but, rather, as an artefact of the way a grid is traversed.
+The same grid may be treated as toroidal, non-toroidal, 4-, 8-, or
+hex-connected without needing to perform any modifications to the data
+structure. Toroidness and connectivity is not treated as a fundamental aspect
+of a grid, but, rather, as an artefact of the way a grid is traversed.
 
-Summing into a second grid the neighbours at distances 2-4 of a central cell on a randomly-generated hexagonal first grid wrapped in a toroid is as sample as:
+Summing into a second grid the neighbours at distances 2-4 of a central cell on
+a randomly-generated hexagonal first grid wrapped in a toroid is as sample as:
 
     #include "grid_engine.h"
     #include <cstdlib>
@@ -245,7 +251,13 @@ Examples
 
 Notes
 =====
-The hexagonal data is stored in a 2D rectangular grid which is internally mapped to a hexagonal space. This mapping shifts columns with odd x-coordinates down a half-cell with respect to columns with even x-coordinates. The user should not normally need to worry about this.
+The hexagonal data is stored in a 2D rectangular grid which is internally
+mapped to a hexagonal space. This mapping shifts columns with odd
+x-coordinates down a half-cell with respect to columns with even x-coordinates.
+The user should not normally need to worry about this.
+
+The file **generators/plotter.py** contains code for plotting the generated
+neighbourhoods in order to verify their correctness.
 
 Author
 ======

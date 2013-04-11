@@ -8,14 +8,6 @@ It can handle hexagonal, 4-connected, and 8-connected grids.
 
 Any of these connectivities can be used in a toroidal fashion, such that the edges of the grid wrap around.
 
-Road Map to Public Use
-======================
- 1. Fix toroidal wrappings (Done: 02013-04-10)
- 2. Verify correctness of every function (Done: 02013-04-11)
- 3. Develop a test suite (Done: 02013-04-11)
- 4. Improved examples (Done: 02013-04-11)
- 5. Improved documentation (Done: 02013-04-11)
-
 Getting Started
 ===============
 

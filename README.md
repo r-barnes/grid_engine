@@ -141,6 +141,28 @@ outward from a central hexagonal cell. Like so:
 To generate a Hex neighbourhood, use
 `hexring(Distance)` or `hexring(Inner,Outer)`.
 
+Grid Edges
+=====================================================
+If a neighbourhood falls beyond the edge of the grid, those cells beyond the
+grid's bounds are automatically ignored. The user need never worry about them.
+
+Toroidal Neighbourhoods
+-----------------------
+A toroidal neighbourhood is one which will wrap around the edge of the grid
+if it would otherwise be beyond the edge of the grid. All the neighbourhoods
+above have toroidal counterparts. These can be accessed with:
+
+    d8tring(Distance)
+    d8tring(Inner,Outer)
+    d4tring(Inner,Outer)
+    d4tring(Inner,Outer)
+    hextring(Inner,Outer)
+    hextring(Inner,Outer)
+
+Caution should be used with toroidal hexagonal neighbourhoods. While the
+program will not crash if they are used, the edge cells of the toroid may not
+always interlock correctly. This will occur if the width or height of the grid
+is an even number.
 
 Examples
 ========

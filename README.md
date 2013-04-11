@@ -13,57 +13,65 @@ Road Map to Public Use
  1. Fix toroidal wrappings (Done: 02013-04-10)
  2. Verify correctness of every function (Done: 02013-04-11)
  3. Develop a test suite (Done: 02013-04-11)
- 4. Improved examples
+ 4. Improved examples (Done: 02013-04-11)
  5. Improved documentation
 
 Examples
 ========
 
-    //Define a general 40x40 grid of integers
+    //Define a an integer grid type
     typedef grid_engine::grid_engine<int> gtype;
-    gtype grid(40,40);
+
+    //Define two 40x40 grids of integers
+    gtype grid(40,40), grid2(40,40);
 
     //Set each cell in the grid to a random number
     for(gtype::parser i=grid.begin();i.good();++i)
       *i=rand();
 
-    //Set each cell in the grid to the average value of itself and its neighbours
-    for(gtype::parser i=grid.begin();i.good();++i)
+    //Set each cell in the second grid to the sum of the D8 neighbours
+    //at distance 1 from its corresponding cell in the first grid
+    grid2.fill(0);
+    for(gtype::parser i=grid2.begin();i.good();++i)
       for(gtype::nparser n=i.d8ring(1);n.good();++n)
-        *i+=*n;
+        *i+=grid(n);
 
-    //Add to every cell the values of all neighbors within 5
-    for(gtype::parser i=grid.begin();i.good();++i)
-      for(gtype::nparser n=i.d8ring(1,5);n.good();++n)
-        *i+=*n;
+    //Set each cell in the second grid to the sum of the D8 neighbours
+    //at distance 2 from its corresponding cell in the first grid
+    grid2.fill(0);
+    for(gtype::parser i=grid2.begin();i.good();++i)
+      for(gtype::nparser n=i.d8ring(2);n.good();++n)
+        *i+=grid(n);
 
-    //Add to every cell the values of all neighbors at distance 5
-    for(gtype::parser i=grid.begin();i.good();++i)
-      for(gtype::nparser n=i.d8ring(5);n.good();++n)
-        *i+=*n;
+    //Set each cell in the second grid to the sum of the D8 neighbours
+    //at distances 2-3 (inclusive) from its corresponding cell in the first
+    //grid
+    grid2.fill(0);
+    for(gtype::parser i=grid2.begin();i.good();++i)
+      for(gtype::nparser n=i.d8ring(2,3);n.good();++n)
+        *i+=grid(n);
 
-    //Add to every cell the values of all neighbors at distances 3-5 (inclusive)
-    for(gtype::parser i=grid.begin();i.good();++i)
-      for(gtype::nparser n=i.d8ring(3,5);n.good();++n)
-        *i+=*n;
+    //Set each cell in the second grid to the sum of the D8 neighbours
+    //at distances 1 from its corresponding cell in the first
+    //grid, assuming that the grid is a toroid
+    grid2.fill(0);
+    for(gtype::parser i=grid2.begin();i.good();++i)
+      for(gtype::nparser n=i.d8tring(1);n.good();++n)
+        *i+=grid(n);
 
-    //Add to every cell the values of all neighbors at distances 3-5 (inclusive)
-    //Assume a toroidal grid
-    for(gtype::parser i=grid.begin();i.good();++i)
-      for(gtype::nparser n=i.d8tring(3,5);n.good();++n)
-        *i+=*n;
+    //Set each cell in the second grid to the sum of the D4 neighbours
+    //at distance 1 from its corresponding cell in the first grid
+    grid2.fill(0);
+    for(gtype::parser i=grid2.begin();i.good();++i)
+      for(gtype::nparser n=i.d4ring(1);n.good();++n)
+        *i+=grid(n);
 
-    //Assuming D4 connectivity...
-    //Add to every cell the values of all neighbors at distances 3-5 (inclusive)
-    for(gtype::parser i=grid.begin();i.good();++i)
-      for(gtype::nparser n=i.d4ring(3,5);n.good();++n)
-        *i+=*n;
-
-    //Assuming hexagonal connectivity...
-    //Add to every cell the values of all neighbors at distances 3-5 (inclusive)
-    for(gtype::parser i=grid.begin();i.good();++i)
-      for(gtype::nparser n=i.hexring(3,5);n.good();++n)
-        *i+=*n;
+    //Set each cell in the second grid to the sum of the hexagonal neighbours
+    //at distance 1 from its corresponding cell in the first grid
+    grid2.fill(0);
+    for(gtype::parser i=grid2.begin();i.good();++i)
+      for(gtype::nparser n=i.hexring(1);n.good();++n)
+        *i+=grid(n);
 
 Notes
 =====

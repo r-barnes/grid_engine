@@ -1,7 +1,5 @@
 grid_engine
 ===========
-**Grid Engine is not (as of 02013-04-10) yet ready for public use.**
-
 **grid_engine** is a class for flexibily working with different kinds of two-dimensional grids.
 
 It can handle hexagonal, 4-connected, and 8-connected grids.
@@ -205,3 +203,7 @@ Examples
 Notes
 =====
 The hexagonal data is stored in a 2D rectangular grid which is internally mapped to a hexagonal space. This mapping shifts columns with odd x-coordinates down a half-cell with respect to columns with even x-coordinates. The user should not normally need to worry about this.
+
+Author
+======
+grid_engine was composed and is maintained by Richard Barnes (rbarnes@umn.edu).

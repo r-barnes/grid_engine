@@ -14,7 +14,7 @@ Road Map to Public Use
  2. Verify correctness of every function (Done: 02013-04-11)
  3. Develop a test suite (Done: 02013-04-11)
  4. Improved examples (Done: 02013-04-11)
- 5. Improved documentation
+ 5. Improved documentation (Done: 02013-04-11)
 
 Getting Started
 ===============

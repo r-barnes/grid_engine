@@ -300,7 +300,7 @@ namespace grid_engine{
 
   template <class T>
   grid_engine<T>::grid_engine(int Gwidth, int Gheight, reference default_item){
-	  resize(Gheight, Gwidth, default_item));
+	  resize(Gheight, Gwidth, default_item);
   }
 
   template <class T>

@@ -28,7 +28,7 @@ int main(int argc, char **argv){
 	vector<int> dx,dy;
 	if(argv[1][0]=='H'){
     //Even columns. Multiply y-coordinate by -1 to make this odd columns
-    //Truth: In the resulting output odd columns are shifted a half-cell down with respect to even columns
+    //Truth: The hexagonal data is stored in a 2D rectangular grid which is internally mapped to a hexagonal space. This mapping shifts columns with odd x-coordinates down a half-cell with respect to columns with even x-coordinates.
 		//int dx_hex[6]={ 0, -1, 1, 0, -1,  1};
 		//int dy_hex[6]={-1,  0, 0, 1, -1, -1};
 		dx.push_back( 0); 		dy.push_back(-1);

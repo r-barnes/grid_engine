@@ -159,9 +159,9 @@ namespace grid_engine{
           ///Returns a hexagonal toroidal neighbour parser
           grid_engine<T>::nparser hextring(int inner_ring, int outer_ring) const;
           ///Returns a D8 toroidal neighbour parser
-          grid_engine<T>::nparser d8tring(int inner_ring, int outer_ring=-1) const;
+          grid_engine<T>::nparser d8tring(int inner_ring, int outer_ring) const;
           ///Returns a D4 toroidal neighbour parser
-          grid_engine<T>::nparser d4tring(int inner_ring, int outer_ring=-1) const;
+          grid_engine<T>::nparser d4tring(int inner_ring, int outer_ring) const;
           ///Parser's x-coordinate
           int x() const;
           ///Parser's y-coordinate
@@ -475,21 +475,21 @@ namespace grid_engine{
 
   template <class T>
   typename grid_engine<T>::nparser
-  grid_engine<T>::parser::hextring(int inner_ring, int outer_ring) const {
+  grid_engine<T>::parser::hextring(int inner_ring, int outer_ring=-1) const {
     if(outer_ring==-1) outer_ring=inner_ring;
     return grid_engine<T>::nparser(my_ge, &nhex, x0, y0, inner_ring, outer_ring, true);
   }
 
   template <class T>
   typename grid_engine<T>::nparser
-  grid_engine<T>::parser::d8tring(int inner_ring, int outer_ring) const {
+  grid_engine<T>::parser::d8tring(int inner_ring, int outer_ring=-1) const {
     if(outer_ring==-1) outer_ring=inner_ring;
     return grid_engine<T>::nparser(my_ge, &nd8, x0, y0, inner_ring, outer_ring, true);
   }
 
   template <class T>
   typename grid_engine<T>::nparser
-  grid_engine<T>::parser::d4tring(int inner_ring, int outer_ring) const {
+  grid_engine<T>::parser::d4tring(int inner_ring, int outer_ring=-1) const {
     if(outer_ring==-1) outer_ring=inner_ring;
     return grid_engine<T>::nparser(my_ge, &nd4, x0, y0, inner_ring, outer_ring, true);
   }

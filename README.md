@@ -10,7 +10,7 @@ Any of these connectivities can be used in a toroidal fashion, such that the edg
 
 Road Map to Public Use
 ======================
- 1. Fix toroidal wrappings
+ 1. Fix toroidal wrappings (Done: 02013-04-10)
  2. Verify correctness of every function
  3. Develop a test suite
  4. Improved examples

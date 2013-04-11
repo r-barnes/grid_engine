@@ -58,7 +58,7 @@ class D4 : public neighbours {
 
 }
 
-#include "neighbours.h"
+#include "grid_engine_neighbours.h"
 
 namespace grid_engine{
 

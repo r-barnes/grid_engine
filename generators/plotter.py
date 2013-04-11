@@ -12,13 +12,15 @@ class GridDrawer(Frame):
     canvas.pack(expand=YES, fill=BOTH)
     self.canvas = canvas
     self.size=20
+    self.xoffset=0
+    self.yoffset=200
 
   def refresh(self):
     self.canvas.configure(scrollregion=self.canvas.bbox("all"))
 
   def DrawSquare(self, orgx, orgy, filler):
-    orgx=orgx*self.size
-    orgy=orgy*self.size
+    orgx=orgx*self.size+self.xoffset
+    orgy=orgy*self.size+self.yoffset
     self.hex = self.canvas.create_polygon(
       orgx, orgy,
       orgx+self.size, orgy,
@@ -31,8 +33,8 @@ class GridDrawer(Frame):
   def DrawHex(self, orgx, orgy, filler):
     oneseg = self.size/4
     twoseg = oneseg*2  # same as size/2
-    orgy=orgy*self.size+(orgx%2)*self.size/2
-    orgx=orgx*self.size*3/4.
+    orgy=orgy*self.size+(orgx%2)*self.size/2 + self.yoffset
+    orgx=orgx*self.size*3/4.                 + self.xoffset
 
     # Create a new one
     self.hex = self.canvas.create_polygon( 
@@ -80,7 +82,7 @@ def main():
 
   drawer(0,0,"blue")
 
-  for i in range(begins[1],begins[2]):
+  for i in range(begins[2],begins[4]):
     drawer(dx[i],dy[i],"red")
 
   h.refresh()

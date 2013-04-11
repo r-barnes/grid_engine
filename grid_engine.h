@@ -192,6 +192,8 @@ namespace grid_engine{
 		  reference operator()(int x, int y);
       ///Reference to the data at the grid cell the neighbour parser is currently pointing it
 		  reference operator()(const nparser &n);
+      ///Reference to the data at the grid cell the parser is currently pointing it
+		  reference operator()(const parser &n);
       ///Constant Reference to the data at (x,y)
 		  const_reference operator()(int x, int y) const;
       ///Set the entire grid to val
@@ -232,6 +234,13 @@ namespace grid_engine{
   template <class T>
   typename grid_engine<T>::reference
   grid_engine<T>::operator()(const nparser &n){
+    assert(in_grid(n.x(),n.y()));
+    return data[n.y()][n.x()];
+  }
+
+  template <class T>
+  typename grid_engine<T>::reference
+  grid_engine<T>::operator()(const parser &n){
     assert(in_grid(n.x(),n.y()));
     return data[n.y()][n.x()];
   }

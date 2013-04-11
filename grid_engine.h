@@ -333,8 +333,10 @@ namespace grid_engine{
       cury=y0+N->dy(i);
     } while(!valid());
 
-    curx=toroidabs(curx,my_ge.width() );
-    cury=toroidabs(cury,my_ge.height());
+    if(toroid){
+      curx=toroidabs(curx,my_ge.width() );
+      cury=toroidabs(cury,my_ge.height());
+    }
   }
 
   template <class T>
@@ -347,6 +349,11 @@ namespace grid_engine{
     i=N->begins(inner_ring);
     curx=x0+N->dx(i);
     cury=y0+N->dy(i);
+
+    if(toroid){
+      curx=toroidabs(curx,my_ge.width() );
+      cury=toroidabs(cury,my_ge.height());
+    }
 
     if(!valid())
       advance_until_valid();

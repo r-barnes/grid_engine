@@ -191,6 +191,14 @@ program will not crash if they are used, the edge cells of the toroid may not
 always interlock correctly. This will occur if the width or height of the grid
 is an even number.
 
+The following are examples of D8 toroidal neighbourhoods:
+
+![Example of a D8 toroidal neighbourhood of distance 1](readme_imgs/d8_tor_n1_00.png)
+![Example of a D8 toroidal neighbourhood of distance 1](readme_imgs/d8_tor_n1_02.png)
+![Example of a D8 toroidal neighbourhood of distance 1](readme_imgs/d8_tor_n1_35.png)
+![Example of a D8 toroidal neighbourhood of distance 1](readme_imgs/d8_tor_n1_55.png)
+![Example of a D8 toroidal neighbourhood of distance 2](readme_imgs/d8_tor_n2_45.png)
+
 Examples
 ========
 

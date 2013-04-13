@@ -1,4 +1,4 @@
-#include "grid_engine.h"
+#include "grid_engine.hpp"
 #include <iostream>
 #include <cstdlib>
 #include <iomanip>

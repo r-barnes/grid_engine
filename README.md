@@ -203,6 +203,16 @@ The following are examples of D8 toroidal neighbourhoods:
 
 ![Example of a D8 toroidal neighbourhood of distance 2](readme_imgs/d8_tor_n2_45.png)
 
+The following are examples of hexagonal toroidal neighbourhoods:
+
+![Example of a hex toroidal neighbourhood of distance 1](readme_imgs/hex_tor_n1_23.png)
+
+![Example of a hex toroidal neighbourhood of distance 1](readme_imgs/hex_tor_n1_32.png)
+
+![Example of a hex toroidal neighbourhood of distance 1](readme_imgs/hex_tor_n1_33.png)
+
+![Example of a hex toroidal neighbourhood of distance 1](readme_imgs/hex_tor_n1_40.png)
+
 Examples
 ========
 

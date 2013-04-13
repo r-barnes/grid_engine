@@ -1,8 +1,5 @@
 grid_engine
 ===========
-**Testing has shown that hexagonal neighbourhoods greater than distance 1 are
-not working as expected. A fix is in the works.**
-
 **grid_engine** is a class for flexibily working with different kinds of
 two-dimensional grids.
 
@@ -270,9 +267,10 @@ The hexagonal data is stored in a 2D rectangular grid which is internally
 mapped to a hexagonal space. This mapping shifts columns with odd
 x-coordinates down a half-cell with respect to columns with even x-coordinates.
 The user should not normally need to worry about this. A depiction of the grid
-system is as follows.
+system is as follows, along with its corresponding rectangular representation.
 
 ![Hexagonal grid coordinate system](readme_imgs/hex_array.png)
+![Hexagonal grid coordinate system, rectangularized](readme_imgs/hex_array_rect.png)
 
 The file **generators/plotter.py** contains code for plotting the generated
 neighbourhoods in order to verify their correctness.

@@ -109,7 +109,7 @@ int main(){
       *i+=grid(n);
 
   cout<<"Hex Ring 1 Sum Test: ";
-  if(grid2.to_str()=="5 5 6 8 11 14 12 17 26 32 38 29 37 56 62 68 49 57 86 92 98 69 52 90 95 100 60")
+  if(grid2.to_str()=="5 5 6 20 11 30 12 17 46 32 58 29 37 76 62 88 49 57 106 92 118 69 52 58 95 64 60")
     cout<<"Passed."<<endl;
   else {
     cout<<"Failed."<<endl;

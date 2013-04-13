@@ -21,7 +21,21 @@ class neighbours {
 };
 
 ///Used to store hexagonal neighbours at varying distances
-class Hex : public neighbours {
+///This is for neighbourhoods originating on an even x-coordinate
+class HexEven : public neighbours {
+  private:
+    static int begins0[],dx0[],dy0[],rlen0,nlen0;
+  public:
+    int begins(int i) const { return begins0[i]; }
+    int dx    (int i) const { return dx0[i];     }
+    int dy    (int i) const { return dy0[i];     }
+    int rlen  ()      const { return rlen0;      }
+    int nlen  ()      const { return nlen0;      }
+};
+
+///Used to store hexagonal neighbours at varying distances
+///This is for neighbourhoods originating on an odd x-coordinate
+class HexOdd : public neighbours {
   private:
     static int begins0[],dx0[],dy0[],rlen0,nlen0;
   public:
@@ -62,9 +76,10 @@ class D4 : public neighbours {
 
 namespace grid_engine{
 
-  D8 nd8;   ///< Singleton instance of the D8 neighbourhood
-  D4 nd4;   ///< Singleton instance of the D4 neighbourhood
-  Hex nhex; ///< Singleton instance of the Hex neighbourhood
+  D8 nd8;       ///< Singleton instance of D8 neighbourhood
+  D4 nd4;       ///< Singleton instance of D4 neighbourhood
+  HexEven nhexeven; ///< Singleton instance of even Hex neighbourhood
+  HexOdd  nhexodd;  ///< Singleton instance of odd Hex neighbourhood
 
   ///Maps an integer i to the range [0,max)
   static inline int toroidabs(int i, int max){
@@ -456,7 +471,10 @@ namespace grid_engine{
   typename grid_engine<T>::nparser
   grid_engine<T>::parser::hexring(int inner_ring, int outer_ring=-1) const {
     if(outer_ring==-1) outer_ring=inner_ring;
-    return grid_engine<T>::nparser(my_ge, &nhex, x0, y0, inner_ring, outer_ring);
+    if(x0%2==0)
+      return grid_engine<T>::nparser(my_ge, &nhexeven, x0, y0, inner_ring, outer_ring);
+    else
+      return grid_engine<T>::nparser(my_ge, &nhexodd,  x0, y0, inner_ring, outer_ring);
   }
 
   template <class T>
@@ -477,7 +495,10 @@ namespace grid_engine{
   typename grid_engine<T>::nparser
   grid_engine<T>::parser::hextring(int inner_ring, int outer_ring=-1) const {
     if(outer_ring==-1) outer_ring=inner_ring;
-    return grid_engine<T>::nparser(my_ge, &nhex, x0, y0, inner_ring, outer_ring, true);
+    if(x0%2==0)
+      return grid_engine<T>::nparser(my_ge, &nhexeven, x0, y0, inner_ring, outer_ring, true);
+    else
+      return grid_engine<T>::nparser(my_ge, &nhexodd, x0, y0, inner_ring, outer_ring, true);
   }
 
   template <class T>

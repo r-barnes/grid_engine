@@ -1,5 +1,8 @@
 grid_engine
 ===========
+**Testing has shown that hexagonal neighbourhoods greater than distance 1 are
+not working as expected. A fix is in the works.**
+
 **grid_engine** is a class for flexibily working with different kinds of
 two-dimensional grids.
 

@@ -269,7 +269,10 @@ Notes
 The hexagonal data is stored in a 2D rectangular grid which is internally
 mapped to a hexagonal space. This mapping shifts columns with odd
 x-coordinates down a half-cell with respect to columns with even x-coordinates.
-The user should not normally need to worry about this.
+The user should not normally need to worry about this. A depiction of the grid
+system is as follows.
+
+![Hexagonal grid coordinate system](readme_imgs/hex_array.png)
 
 The file **generators/plotter.py** contains code for plotting the generated
 neighbourhoods in order to verify their correctness.

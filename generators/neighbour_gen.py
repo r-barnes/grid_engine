@@ -133,6 +133,7 @@ def main():
   if sys.argv[3]=='draw':
     h=GridDrawer(10,10,True)
   elif sys.argv[3]=='nodraw':
+    sys.stderr.write("Run %s with the 'draw' option to verify neighbourhood correctness\n" % (sys.argv[0]))
     h=GridDrawer(10,10,False)
   else:
     print "Please specify draw/nodraw"

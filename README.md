@@ -186,11 +186,6 @@ above have toroidal counterparts. These can be accessed with:
     hextring(Inner,Outer)
     hextring(Inner,Outer)
 
-Caution should be used with toroidal hexagonal neighbourhoods. While the
-program will not crash if they are used, the edge cells of the toroid may not
-always interlock correctly. This will occur if the width or height of the grid
-is an even number.
-
 The following are examples of D8 toroidal neighbourhoods:
 
 ![Example of a D8 toroidal neighbourhood of distance 1](readme_imgs/d8_tor_n1_00.png)
@@ -212,6 +207,15 @@ The following are examples of hexagonal toroidal neighbourhoods:
 ![Example of a hex toroidal neighbourhood of distance 1](readme_imgs/hex_tor_n1_33.png)
 
 ![Example of a hex toroidal neighbourhood of distance 1](readme_imgs/hex_tor_n1_40.png)
+
+Caution should be used with toroidal hexagonal neighbourhoods. While the
+program will not crash if they are used, the edge cells of the toroid may not
+always interlock correctly. This will occur if the width or height of the grid
+is an even number. This phenomenon is demonstrated below.
+
+![Example of a hex toroidal neighbourhood which doesn't align](readme_imgs/hex_tor_badoffset2.png)
+
+![Example of a hex toroidal neighbourhood which doesn't align](readme_imgs/hex_tor_badoffset1.png)
 
 Examples
 ========

@@ -146,7 +146,7 @@ def main():
     h.SetGrid('Hex')
     nx=[ 0,-1,1,0,-1, 1]
     ny=[-1, 0,0,1,-1,-1]
-    prefix="int Hex::"
+    prefix="int HexEven::"
   elif sys.argv[1]=='HexOdd':
     h.SetGrid('Hex')
     nx=[ 0,-1,1,0,-1, 1]

@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS=-Wall -fopenmp -O3
+CFLAGS=-Wall -O3
 nsize=100
 
 all:

@@ -92,21 +92,21 @@ namespace grid_engine{
   ///A grid of data
   template <class T>
   class grid_engine {
-	  typedef std::vector< std::vector<T> > arr2d;
-	  private:
-		  arr2d data; ///< Storage variable for the grid
-	  public:
-		  typedef T		     value_type;
-		  typedef T*       pointer;
-		  typedef const T* const_pointer;
-		  typedef T&       reference;
-		  typedef const T& const_reference;
-		  typedef int		   size_type;
+    typedef std::vector< std::vector<T> > arr2d;
+    private:
+      arr2d data; ///< Storage variable for the grid
+    public:
+      typedef T         value_type;
+      typedef T*       pointer;
+      typedef const T* const_pointer;
+      typedef T&       reference;
+      typedef const T& const_reference;
+      typedef int       size_type;
 
       ///Used to examine neighbours at varying distances around a central cell
-	    class nparser {
-		    private:
-			    grid_engine<T> &my_ge;
+      class nparser {
+        private:
+          grid_engine<T> &my_ge;
           neighbours *N;  ///< Connectivity class of the grid ( Hex, D4, D8 )
           int i;          ///< Neighbour currently being considered
           int x0;         ///< x-coordinate of center of neighbourhood
@@ -119,7 +119,7 @@ namespace grid_engine{
           bool valid() const;
           ///Increment the parser until it points at a coordinate within the grid
           void advance_until_valid();
-		    public:
+        public:
           /**
             @brief Makes a new neighbour parser
             @param[in] ge      Grid the neighbour parser refers to
@@ -130,13 +130,13 @@ namespace grid_engine{
             @param[in] outer_ring   Outermost (inclusive) ring of neighbours to consider
             @param[in] toroid  If true, then the neighbourhoods wrap around grid's edges
           */
-			    nparser ( grid_engine<T> &ge, neighbours *N, int x0, int y0, int inner_ring, int outer_ring, bool toroid=false);
+          nparser ( grid_engine<T> &ge, neighbours *N, int x0, int y0, int inner_ring, int outer_ring, bool toroid=false);
           ///Increments the parser to the next neighbour
-			    nparser& operator++();
+          nparser& operator++();
           ///Increments the parser to the next neighbour
-			    nparser operator++(int);
+          nparser operator++(int);
           ///Reference to the data at the coordinate the parser is currently pointing it
-			    reference operator*() const;
+          reference operator*() const;
           ///Returns true if the parser can be safely incremented again
           bool good() const;
           ///Curent x-coordinate of parser
@@ -147,22 +147,22 @@ namespace grid_engine{
           int dx() const;
           ///Curent y-offset of parser
           int dy() const;
-	    };
+      };
 
       ///Used to examine the cells of a grid
-		  class parser {
-			  private:
-				  grid_engine<T> &my_ge;
-				  int x0; ///< Current x-coordinate of the parser
+      class parser {
+        private:
+          grid_engine<T> &my_ge;
+          int x0; ///< Current x-coordinate of the parser
           int y0; ///< Current y-coordinate of the parser
-			  public:
-				  parser (grid_engine<T> &ge, int x0, int y0);
+        public:
+          parser (grid_engine<T> &ge, int x0, int y0);
           ///Reference to the data at the coordinate the parser is currently pointing it
-				  reference operator*() const;
+          reference operator*() const;
           ///Increments the parser to the next coordinate
-				  parser& operator++();
+          parser& operator++();
           ///Increments the parser to the next coordinate
-				  parser operator++(int);
+          parser operator++(int);
           ///Returns true if the parser can be safely incremented again
           bool good() const;
           ///Returns a hexagonal neighbour parser
@@ -181,36 +181,36 @@ namespace grid_engine{
           int x() const;
           ///Parser's y-coordinate
           int y() const;
-		  };
+      };
 
       ///Resize grid. Non-destructive during growth.
-		  void resize(int Gwidth, int Gheight);
+      void resize(int Gwidth, int Gheight);
       ///Resize grid. Non-destructive during growth, only new elements are set to default.
-		  void resize(int Gwidth, int Gheight, reference default_item);
+      void resize(int Gwidth, int Gheight, reference default_item);
       ///Returns true if (x,y) is within the bounds of the grid
       bool in_grid(int x, int y) const;
       ///Width of the grid
-		  size_type width() const;
+      size_type width() const;
       ///Height of the grid
-		  size_type height() const;
+      size_type height() const;
       ///Construct a new grid
-		  grid_engine();
+      grid_engine();
       ///Construct a new grid of the given width and height
-		  grid_engine(int Gwidth, int Gheight);
+      grid_engine(int Gwidth, int Gheight);
       ///Construct a new grid of the given width and height, all cells set to default
-		  grid_engine(int Gwidth, int Gheight, reference default_item);
+      grid_engine(int Gwidth, int Gheight, reference default_item);
       ///Destory all data in the grid
-		  void clear();
+      void clear();
       ///Parser pointing to the first cell of the grid
-		  parser begin();
+      parser begin();
       ///Reference to the data at (x,y)
-		  reference operator()(int x, int y);
+      reference operator()(int x, int y);
       ///Reference to the data at the grid cell the neighbour parser is currently pointing it
-		  reference operator()(const nparser &n);
+      reference operator()(const nparser &n);
       ///Reference to the data at the grid cell the parser is currently pointing it
-		  reference operator()(const parser &n);
+      reference operator()(const parser &n);
       ///Constant Reference to the data at (x,y)
-		  const_reference operator()(int x, int y) const;
+      const_reference operator()(int x, int y) const;
       ///Set the entire grid to val
       void fill(const value_type &val);
       /**@brief Print the grid in a well-defined string format; can be read with from_str().
@@ -296,14 +296,14 @@ namespace grid_engine{
 
   template <class T>
   void grid_engine<T>::resize(int Gwidth, int Gheight){
-	  data.resize(Gheight, std::vector<T> (Gwidth));
+    data.resize(Gheight, std::vector<T> (Gwidth));
     for(typename std::vector< std::vector<T> >::iterator i=data.begin();i!=data.end();++i)
       (*i).resize(Gwidth);
   }
 
   template <class T>
   void grid_engine<T>::resize(int Gwidth, int Gheight, reference default_item){
-	  data.resize(Gheight, std::vector<T> (Gwidth, default_item));
+    data.resize(Gheight, std::vector<T> (Gwidth, default_item));
     for(typename std::vector< std::vector<T> >::iterator i=data.begin();i!=data.end();++i)
       (*i).resize(Gwidth, default_item);
   }
@@ -330,12 +330,12 @@ namespace grid_engine{
 
   template <class T>
   grid_engine<T>::grid_engine(int Gwidth, int Gheight){
-	  resize(Gwidth,Gheight);
+    resize(Gwidth,Gheight);
   }
 
   template <class T>
   grid_engine<T>::grid_engine(int Gwidth, int Gheight, reference default_item){
-	  resize(Gheight, Gwidth, default_item);
+    resize(Gheight, Gwidth, default_item);
   }
 
   template <class T>
@@ -446,20 +446,20 @@ namespace grid_engine{
   template <class T>
   typename grid_engine<T>::parser&
   grid_engine<T>::parser::operator++(){   //Prefix ++
-	  ++x0;
-	  if(x0==my_ge.width()){
-		  x0=0;
-		  ++y0;
-	  }
-	  return *this;
+    ++x0;
+    if(x0==my_ge.width()){
+      x0=0;
+      ++y0;
+    }
+    return *this;
   }
 
   template <class T>
   typename grid_engine<T>::parser
   grid_engine<T>::parser::operator++(int){ //Postfix ++
-	  parser tmp=*this;
-	  ++*this;
-	  return tmp;
+    parser tmp=*this;
+    ++*this;
+    return tmp;
   }
 
   template <class T>
